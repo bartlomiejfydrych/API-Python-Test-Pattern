@@ -1,0 +1,6 @@
+> Dodanie projektu na GitHuba
+> Dodanie osobnego podkatalogu dla shema w test_data
+> Obczajenie lepszych asercji np. "zawiera"
+> Obczajenie pluginu pytest-check: https://github.com/okken/pytest-check
+> Lepsze pokazywanie wyników testów dla pytest
+> Dokładne opisanie wszystkiego w prezentacji
