@@ -1,6 +1,11 @@
-> Dodanie projektu na GitHuba
+> Dalsze uzupełnianie testów
 > Dodanie osobnego podkatalogu dla shema w test_data
-> Obczajenie lepszych asercji np. "zawiera"
-> Obczajenie pluginu pytest-check: https://github.com/okken/pytest-check
 > Lepsze pokazywanie wyników testów dla pytest
-> Dokładne opisanie wszystkiego w prezentacji
+> Dokładne opisanie wszystkiego w prezentacji, kodzie i readME
+
+Wyjaśnione:
+> Obczajenie lepszych asercji np. "zawiera":
+Nie potrzeba na to asercji. Tutaj polega to na tym, że piszę się słowo assert a następnie "element" in tablica
+
+Opcjonalne:
+> Obczajenie pluginu pytest-check: https://github.com/okken/pytest-check

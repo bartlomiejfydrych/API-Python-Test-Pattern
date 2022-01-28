@@ -17,7 +17,7 @@ class ResponseShow:
         # Size:
         print(f"Size: {len(r.content)}{c_end}")
         # Response JSON:
-        formatted_json = json.dumps(r.json(), indent=4)
+        formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
         colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
         print(colorful_json)
 
@@ -64,6 +64,9 @@ indent=4 - to ilość spacji używana do układania elementów
 Wyświetlanie dla body response'a:
 print(json.dumps(r.json(), indent=4))
 Dla 'r' trzeba zawsze określić czy chcemy mieć go wyświetlany jako string (r.text) lub JSON (r.json())
+
+ensure_ascii=False
+Wyświetla polskie znaki
 
 Wyświetlanie dla nagłówków requesta:
 print(json.dumps(dict(r.headers), indent=4))
