@@ -1,23 +1,17 @@
-class DataPostRawText:
+class DataPostRequest:
 
-    post_raw_text_schema = {
+    post_request_schema = {
         "type": "object",
         "properties": {
             "args": {"type": "object"},
-            "data": {"type": "string"},
+            "data": {"type": ["object", "string"]},
             "files": {"type": "object"},
             "form": {
                 "type": "object",
-                "properties": {
-                    "Wartość_1": {"type": "string"},
-                    "Wartość 2": {"type": "string"},
-                    "Wartość3": {"type": "string"}
+                "patternProperties": {
+                    ".": {"type": ["string", "integer"]},
                 },
-                "required": [
-                    "Wartość_1",
-                    "Wartość 2",
-                    "Wartość3"
-                ]
+                "additionalProperties": True
             },
             "headers": {
                 "type": "object",
@@ -30,7 +24,6 @@ class DataPostRawText:
                     "user-agent": {"type": "string"},
                     "accept-encoding": {"type": "string"},
                     "accept": {"type": "string"},
-                    "content-type": {"type": "string"}
                 },
                 "required": [
                     "x-forwarded-proto",
@@ -41,21 +34,17 @@ class DataPostRawText:
                     "user-agent",
                     "accept-encoding",
                     "accept",
-                    "content-type"
-                ]
+                ],
+                "additionalProperties": {
+                    "content-type": {"type": "string"}
+                }
             },
             "json": {
-                "type": "object",
-                "properties": {
-                    "Wartość_1": {"type": "string"},
-                    "Wartość 2": {"type": "string"},
-                    "Wartość3": {"type": "string"}
+                "type": ["object", "null"],
+                "patternProperties": {
+                    ".": {"type": ["string", "integer"]},
                 },
-                "required": [
-                    "Wartość_1",
-                    "Wartość 2",
-                    "Wartość3"
-                ]
+                "additionalProperties": True
             },
             "url": {"type": "string"}
         },
@@ -70,7 +59,7 @@ class DataPostRawText:
         ]
     }
 
-    response = {
+    post_response = {
         "args": {},
         "data": "",
         "files": {},
@@ -96,4 +85,11 @@ class DataPostRawText:
             "Wartość3": "1bęc2()$%3"
         },
         "url": "https://postman-echo.com/post"
+    }
+
+    params_args = {
+        "status": "positive",
+        "photos": "no duplicate",
+        "region": "HKS 122",
+        "ph": "Albert Gizmo"
     }
