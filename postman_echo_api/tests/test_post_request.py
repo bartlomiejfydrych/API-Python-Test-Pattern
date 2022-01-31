@@ -7,7 +7,7 @@ from utils.response_show import ResponseShow
 
 
 def test_post_request_show():
-    r = PostRequestUtils.post_raw_text()
+    r = PostRequestUtils.post_file()
     ResponseShow.show_r(r)
     ResponseShow.show_optional(r)
 

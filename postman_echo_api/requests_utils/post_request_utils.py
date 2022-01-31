@@ -1,6 +1,7 @@
 from requests import Response
 
 from postman_echo_api.requests_endpoints.post_request import PostRequest
+from postman_echo_api.resources.files_config import POST_REQUEST_TEXT_FILE_PATH, POST_REQUEST_GRAPHIC_FILE_PATH
 
 
 class PostRequestUtils:
@@ -31,4 +32,12 @@ class PostRequestUtils:
             "ph": "Albert Gizmo"
         }
         r = PostRequest.post_request_args(params_args)
+        return r
+
+    @staticmethod
+    def post_file() -> Response:
+        file = {
+            "file": open(POST_REQUEST_GRAPHIC_FILE_PATH, "rb")
+        }
+        r = PostRequest.post_request_file(file)
         return r

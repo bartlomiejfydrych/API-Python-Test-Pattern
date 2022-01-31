@@ -15,3 +15,7 @@ class PostRequest:
     @staticmethod
     def post_request_args(params_args) -> Response:
         return requests.post(PostRequest.url, params=params_args, timeout=1)
+
+    @staticmethod
+    def post_request_file(file) -> Response:
+        return requests.post(PostRequest.url, files=file, timeout=1)
