@@ -35,7 +35,15 @@ class PostRequestUtils:
         return r
 
     @staticmethod
-    def post_file() -> Response:
+    def post_text_file() -> Response:
+        file = {
+            "file": open(POST_REQUEST_TEXT_FILE_PATH, "rb")
+        }
+        r = PostRequest.post_request_file(file)
+        return r
+
+    @staticmethod
+    def post_graphic_file() -> Response:
         file = {
             "file": open(POST_REQUEST_GRAPHIC_FILE_PATH, "rb")
         }

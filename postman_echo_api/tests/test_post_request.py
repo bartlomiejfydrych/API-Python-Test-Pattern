@@ -7,7 +7,7 @@ from utils.response_show import ResponseShow
 
 
 def test_post_request_show():
-    r = PostRequestUtils.post_file()
+    r = PostRequestUtils.post_graphic_file()
     ResponseShow.show_r(r)
     ResponseShow.show_optional(r)
 
@@ -99,3 +99,54 @@ def test_post_args():
     info = "Response should have correct url"
     assert rj["url"] == "https://postman-echo.com/post?status=positive&photos=no+duplicate&region=HKS+122&ph=Albert" \
                         "+Gizmo", info
+
+
+def test_post_text_file():
+    # Prepare response:
+    r = PostRequestUtils.post_text_file()
+    ResponseInfo.log_extra_response_info(r)
+    rj = r.json()
+
+    assert r.status_code == 200, "Response should have status code 200"
+    validate(r.json(), DataPostRequest.post_request_schema), "Response should have correct Schema"
+
+    # Detailed tests
+    info = "Response should have correct data in 'files'"
+    assert rj["files"][
+               "post_request_text_file.txt"] == "data:application/octet-stream;base64,VGV4dCBmaWxlIHRvIHNlbmQu", info
+
+    info = "Response should have correct other parameters"
+    assert rj["args"] == {}, info
+    assert rj["form"] == {}, info
+    assert rj["json"] is None, info
+    assert rj["headers"]["x-forwarded-proto"] == "https", info
+    assert rj["headers"]["x-forwarded-port"] == "443", info
+    assert rj["headers"]["host"] == "postman-echo.com", info
+
+    info = "Response should have correct url"
+    assert rj["url"] == "https://postman-echo.com/post", info
+
+
+def test_post_graphic_file():
+    # Prepare response:
+    r = PostRequestUtils.post_graphic_file()
+    ResponseInfo.log_extra_response_info(r)
+    rj = r.json()
+
+    assert r.status_code == 200, "Response should have status code 200"
+    validate(r.json(), DataPostRequest.post_request_schema), "Response should have correct Schema"
+
+    # Detailed tests
+    info = "Response should have correct data in 'files'"
+    assert rj["files"]["post_request_graphic_file.png"] == DataPostRequest.graphic_file_binary_data, info
+
+    info = "Response should have correct other parameters"
+    assert rj["args"] == {}, info
+    assert rj["form"] == {}, info
+    assert rj["json"] is None, info
+    assert rj["headers"]["x-forwarded-proto"] == "https", info
+    assert rj["headers"]["x-forwarded-port"] == "443", info
+    assert rj["headers"]["host"] == "postman-echo.com", info
+
+    info = "Response should have correct url"
+    assert rj["url"] == "https://postman-echo.com/post", info
