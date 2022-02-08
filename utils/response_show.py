@@ -35,6 +35,16 @@ class ResponseShow:
 
     @staticmethod
     def show_bad_json(r):
+        # Console colors:
+        c_green = '\033[92m'
+        c_end = '\033[0m'
+        # Status code:
+        print(f"{c_green}\nStatus: {r.status_code}")
+        # Time:
+        print(f"Time: {r.elapsed.total_seconds()}")
+        # Size:
+        print(f"Size: {len(r.content)}{c_end}")
+        # Response TEXT:
         print(r.text)
 
 

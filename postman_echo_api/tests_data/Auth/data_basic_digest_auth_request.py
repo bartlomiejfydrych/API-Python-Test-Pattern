@@ -1,4 +1,4 @@
-class DataBasicAuthRequest:
+class DataBasicDigestAuthRequest:
 
     basic_auth_request_schema = {
         "type": "object",

@@ -1,22 +1,22 @@
 from jsonschema.validators import validate
 
 from Auth.data_basic_digest_auth_request import DataBasicDigestAuthRequest
-from postman_echo_api.requests_endpoints.Auth.basic_auth_request import BasicAuthRequest
+from postman_echo_api.requests_endpoints.Auth.digest_auth_request import DigestAuthRequest
 from utils.response_info import ResponseInfo
 from utils.response_show import ResponseShow
 
 
-# def test_basic_auth_request_show():
-#     r = BasicAuthRequest.basic_auth_request_negative()
+# def test_digest_auth_request_show():
+#     r = DigestAuthRequest.digest_auth_request_negative()
 #     # ResponseShow.show_r(r)
 #     # ResponseShow.show_optional(r)
-#     print(r.text)
+#     ResponseShow.show_bad_json(r)
 
 
-def test_basic_auth_request_positive():
+def test_digest_auth_request_positive():
 
     # Prepare response:
-    r = BasicAuthRequest.basic_auth_request_positive()
+    r = DigestAuthRequest.digest_auth_request_positive()
     ResponseInfo.log_extra_response_info(r)
     rj = r.json()
 
@@ -29,10 +29,10 @@ def test_basic_auth_request_positive():
     assert rj["authenticated"] is True, info
 
 
-def test_basic_auth_request_negative():
+def test_digest_auth_request_negative():
 
     # Prepare response:
-    r = BasicAuthRequest.basic_auth_request_negative()
+    r = DigestAuthRequest.digest_auth_request_negative()
     ResponseInfo.log_extra_response_info(r)
     rt = r.text
 
