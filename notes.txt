@@ -1,19 +1,29 @@
-POSTMAN ECHO API:
-
-Postman Echo API link:
-https://www.postman.com/postman/workspace/published-postman-templates/documentation/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65?ctx=documentation
-
 _______________________________________________________________________________________________________________________
-POSTMAN API:
+AKTUALIZOWANIE WERSJI:
+_______________________________________________________________________________________________________________________
 
-Postman API link:
-https://www.postman.com/postman/workspace/published-postman-templates/collection/631643-dac5eac9-148d-a32e-b76b-3edee9da28f7?ctx=documentation
+Aktualizacja PyCharm:
+Help -> Check for updates...
 
-Postman API key:
-Nazwa: 123456789qwerty
-Wartość:
-PMAK-61ba0376cf6da9005d99b477-024195578fb7e56b00b15a982b52c11b3d
+Aktualizacja Python:
+pipenv --python 3.6
+Sprawdzić Pipfile czy jest tam wpisany numer najnowszej wersji. Jeżeli nie to nadpisać ręcznie.
 
+Aktualizacja biblioteki:
+pipenv update requests
 
-
-
+Pozostałe wnioski:
+- Nie instalować ręcznie nowego Pythona i nie odinstalowywać starego (gdy brak pewności).
+- W przypadku ręcznego zainstalowania nowego Pythona trzeba dla niego ponownie zainstalować pipenv (pip install pipenv
+).
+- Należy z PATH wywalić ścieżki do starego Pythona.
+- Restart IDE najlepiej robić poprzez jego zamknięcie [X] i ponowne uruchomienie zamiast przez opcję "Invalidate Caches".
+- (pipenv --venv) Pokazuje lokalizację virtualnego środowiska.
+- Z podanej ścieżki kasujemy katalogi z virtualnymi środowiskami, które nas interesują.
+- W IDE (prawy dolny róg) tworze nowy interpreter i wybieram z listy po lewej [Pipenv Enviroment].
+- (pipenv shell) służy do tego by komendy z pythona uruchamiać w venv.
+- pipenv nigdy nie instaluje/aktualizuje głównych bibliotek, tylko dla projektu w venv.
+- Za pomocą IDE -> zakładka Python Packages również można instalować i aktualizować paczki (robi to przez pipenv).
+- Pipenv wie, że ma tu instalować paczki osobno (a nie na cały komputer) dzięki plikowi Pipfile.
+- Pipfile pojawia się w katalogu z projektem dzięki (pipenv init) albo (pipenv install) albo przez IDE.
+- Żeby zbudowało się virtualne środowisko w projekcie również wystarczy na początku samo (pipenv install byleco).

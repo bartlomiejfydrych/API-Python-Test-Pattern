@@ -13,3 +13,22 @@ https://documenter.getpostman.com/view/4016432/RWToRJCq#intro
 Pozostałe:
 https://apipheny.io/free-api/
 https://automationpanda.com/tag/demo-site/
+
+_______________________________________________________________________________________________________________________
+STARE:
+_______________________________________________________________________________________________________________________
+POSTMAN ECHO API:
+
+Postman Echo API link:
+https://www.postman.com/postman/workspace/published-postman-templates/documentation/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65?ctx=documentation
+
+________________
+POSTMAN API:
+
+Postman API link:
+https://www.postman.com/postman/workspace/published-postman-templates/collection/631643-dac5eac9-148d-a32e-b76b-3edee9da28f7?ctx=documentation
+
+Postman API key:
+Nazwa: 123456789qwerty
+Wartość:
+PMAK-61ba0376cf6da9005d99b477-024195578fb7e56b00b15a982b52c11b3d
