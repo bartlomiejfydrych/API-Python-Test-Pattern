@@ -1,0 +1,15 @@
+Strony do pokrycia testami API:
+
+https://reqres.in/
+https://httpbin.org/
+http://dummy.restapiexample.com/
+https://jsonplaceholder.typicode.com/
+https://fakerestapi.azurewebsites.net/
+https://petstore.swagger.io/
+https://restful-booker.herokuapp.com/apidoc/index.html
+https://gorest.co.in/
+https://documenter.getpostman.com/view/4016432/RWToRJCq#intro
+
+Pozostałe:
+https://apipheny.io/free-api/
+https://automationpanda.com/tag/demo-site/

@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/postman_echo_api/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/postman_echo_api/tests_data" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (cwiczenie-w9mvUQQy)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Pipenv (cwiczenie)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
