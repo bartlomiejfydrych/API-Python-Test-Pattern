@@ -1,8 +1,8 @@
 Strony do pokrycia testami API:
 
+http://dummy.restapiexample.com/
 https://reqres.in/
 https://httpbin.org/
-http://dummy.restapiexample.com/
 https://jsonplaceholder.typicode.com/
 https://fakerestapi.azurewebsites.net/
 https://petstore.swagger.io/

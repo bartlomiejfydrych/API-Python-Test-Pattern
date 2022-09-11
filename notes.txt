@@ -27,3 +27,15 @@ Pozostałe wnioski:
 - Pipenv wie, że ma tu instalować paczki osobno (a nie na cały komputer) dzięki plikowi Pipfile.
 - Pipfile pojawia się w katalogu z projektem dzięki (pipenv init) albo (pipenv install) albo przez IDE.
 - Żeby zbudowało się virtualne środowisko w projekcie również wystarczy na początku samo (pipenv install byleco).
+
+_______________________________________________________________________________________________________________________
+Błąd 406:
+_______________________________________________________________________________________________________________________
+
+Niektóre API mogą mieć zablokowane requesty, jeżeli w headers jest user-agent=python.
+Należy go sobie wtedy podmienić na coś z np.
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36
+
+url = 'https://api.github.com/some/endpoint'
+headers = {'user-agent': 'my-app/0.0.1'}
+r = requests.get(url, headers=headers)
