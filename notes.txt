@@ -38,4 +38,13 @@ Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 
 url = 'https://api.github.com/some/endpoint'
 headers = {'user-agent': 'my-app/0.0.1'}
+{'user-agent': 'Chrome/105.0.0.0'}
 r = requests.get(url, headers=headers)
+
+_______________________________________________________________________________________________________________________
+Błędy związane z unittest/pytest:
+_______________________________________________________________________________________________________________________
+
+Czasem IDE zamiast pytest może używać unittest co może powodować błędy.
+Należy wtedy w ustawieniach wskazać mu Pytest do testów.
+Oraz usunąć zbędne interpretery.
