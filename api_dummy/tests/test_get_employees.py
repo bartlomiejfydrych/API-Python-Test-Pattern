@@ -6,11 +6,11 @@ from utils.response_info import ResponseInfo
 from utils.response_show import ResponseShow
 
 
-def test_get_employees_show():
-    r = GetEmployees.get_employees()
-    ResponseShow.show_r(r)
-    ResponseShow.show_optional(r)
-    assert r.status_code == 200, "Response should have status code 200"
+# def test_get_employees_show():
+#     r = GetEmployees.get_employees()
+#     ResponseShow.show_r(r)
+#     ResponseShow.show_optional(r)
+from utils.tests_info import TestsInfo
 
 
 def test_get_employees():
@@ -20,11 +20,18 @@ def test_get_employees():
     # Przerobienie response na JSON:
     rj = r.json()
 
+    # ---------------------
     # Basic response tests:
-    assert r.status_code == 200, "Response should have status code 200"
-    validate(rj, DataGetEmployees.schema_get_employees), "Response should have correct Schema"
+    # ---------------------
+    test_a = "Response should have status code 200"
+    assert r.status_code == 200, test_a
 
+    test_b = "Response should have correct Schema"
+    validate(rj, DataGetEmployees.schema_get_employees), test_b
+
+    # ---------------------
     # Detailed tests:
+    # ---------------------
     test_1 = "Status should be 'success'"
     assert rj["status"] == "success", test_1
 
@@ -45,3 +52,5 @@ def test_get_employees():
 
     test_5 = "Complete response must be the same as saved response"
     assert rj == DataGetEmployees.response_get_emplotees, test_5
+
+    TestsInfo.show_tests(test_a, test_b, test_1, test_2, test_3, test_4, test_5)
