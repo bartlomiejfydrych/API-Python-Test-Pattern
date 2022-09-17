@@ -1,4 +1,5 @@
 class DataGetEmployees:
+
     schema_get_employees = {
         "type": "object",
         "properties": {
@@ -49,7 +50,7 @@ class DataGetEmployees:
         ]
     }
 
-    response_get_emplotees = {
+    response_get_employees = {
         "status": "success",
         "data": [
             {

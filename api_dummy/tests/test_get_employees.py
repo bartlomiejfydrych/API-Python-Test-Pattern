@@ -1,37 +1,40 @@
 from jsonschema.validators import validate
 
-from api_dummy.requests_endpoints.get_employees import GetEmployees
+from api_dummy.requests_endpoints.get_employees import EndpointGetEmployees
 from data_get_employees import DataGetEmployees
 from utils.response_info import ResponseInfo
+from utils.tests_info import TestsInfo
 from utils.response_show import ResponseShow
 
 
+# Dla PyTest nazwy klas z testami zaczynamy od słowa 'Test'
+# np. class TestGetEmployees:
+
 # def test_get_employees_show():
-#     r = GetEmployees.get_employees()
+#     r = EndpointGetEmployees.get_employees()
 #     ResponseShow.show_r(r)
 #     ResponseShow.show_optional(r)
-from utils.tests_info import TestsInfo
 
 
 def test_get_employees():
     # Puszczenie requesta i logowanie info:
-    r = GetEmployees.get_employees()
+    r = EndpointGetEmployees.get_employees()
     ResponseInfo.log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
 
-    # ---------------------
+    # ----------------------
     # Basic response tests:
-    # ---------------------
+    # ----------------------
     test_a = "Response should have status code 200"
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
     validate(rj, DataGetEmployees.schema_get_employees), test_b
 
-    # ---------------------
+    # ----------------------
     # Detailed tests:
-    # ---------------------
+    # ----------------------
     test_1 = "Status should be 'success'"
     assert rj["status"] == "success", test_1
 
@@ -51,6 +54,9 @@ def test_get_employees():
     assert employee_five["profile_image"] == "", test_4
 
     test_5 = "Complete response must be the same as saved response"
-    assert rj == DataGetEmployees.response_get_emplotees, test_5
+    assert rj == DataGetEmployees.response_get_employees, test_5
 
+    # ----------------------
+    # Wyświetlenie testów:
+    # ----------------------
     TestsInfo.show_tests(test_a, test_b, test_1, test_2, test_3, test_4, test_5)

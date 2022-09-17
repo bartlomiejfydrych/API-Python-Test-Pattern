@@ -48,3 +48,8 @@ ________________________________________________________________________________
 Czasem IDE zamiast pytest może używać unittest co może powodować błędy.
 Należy wtedy w ustawieniach wskazać mu Pytest do testów.
 Oraz usunąć zbędne interpretery.
+
+_______________________________________________________________________________________________________________________
+Zmienna klasowa vs Zmienna instancji:
+_______________________________________________________________________________________________________________________
+Jeżeli chcemy przesłać zmienną do klasy, a nie do instancji to używamy NazwaKlasy.zmienna zamiast self.zmienna
