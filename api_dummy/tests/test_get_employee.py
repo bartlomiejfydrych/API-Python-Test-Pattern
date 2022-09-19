@@ -1,22 +1,22 @@
 from jsonschema.validators import validate
 
-from api_dummy.requests_endpoints.get_employee import EndpointGetEmployee
-from data_get_employee import DataGetEmployee
-from utils.response_info import ResponseInfo
-from utils.response_show import ResponseShow
-from utils.tests_info import TestsInfo
+from api_dummy.requests_endpoints.get_employee import get_employee
+from data_get_employee import schema_get_employee, response_get_employee
+from utils.response_info import log_extra_response_info
+from utils.response_show import show_r, show_optional
+from utils.tests_info import show_tests
 
 
 def test_get_employee_show():
-    r = EndpointGetEmployee.get_employee_no_exist_id()
-    ResponseShow.show_r(r)
-    ResponseShow.show_optional(r)
+    r = get_employee(9999)
+    show_r(r)
+    show_optional(r)
 
 
 def test_get_employee():
     # Puszczenie requesta i logowanie info:
-    r = EndpointGetEmployee.get_employee()
-    ResponseInfo.log_extra_response_info(r)
+    r = get_employee(4)
+    log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
 
@@ -27,7 +27,7 @@ def test_get_employee():
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
-    validate(rj, DataGetEmployee.schema_get_employee), test_b
+    validate(rj, schema_get_employee), test_b
 
     # ----------------------
     # Detailed tests:
@@ -46,18 +46,18 @@ def test_get_employee():
     assert rj["data"]["profile_image"] == "", test_3
 
     test_4 = "Complete response must be the same as saved response"
-    assert rj == DataGetEmployee.response_get_employee, test_4
+    assert rj == response_get_employee, test_4
 
     # ----------------------
     # Wyświetlenie testów:
     # ----------------------
-    TestsInfo.show_tests(test_a, test_b, test_1, test_2, test_3, test_4)
+    show_tests(test_a, test_b, test_1, test_2, test_3, test_4)
 
 
 def test_get_employee_no_exist_id():
     # Puszczenie requesta i logowanie info:
-    r = EndpointGetEmployee.get_employee_no_exist_id()
-    ResponseInfo.log_extra_response_info(r)
+    r = get_employee(9999)
+    log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
 
@@ -68,7 +68,7 @@ def test_get_employee_no_exist_id():
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
-    validate(rj, DataGetEmployee.schema_get_employee), test_b
+    validate(rj, schema_get_employee), test_b
 
     # ----------------------
     # Detailed tests:
@@ -85,4 +85,4 @@ def test_get_employee_no_exist_id():
     # ----------------------
     # Wyświetlenie testów:
     # ----------------------
-    TestsInfo.show_tests(test_a, test_b, test_1, test_2, test_3)
+    show_tests(test_a, test_b, test_1, test_2, test_3)

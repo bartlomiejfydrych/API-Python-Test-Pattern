@@ -1,17 +1,14 @@
 import requests
 from requests import Response
 
-from api_dummy.requests_endpoints.url_base import UrlBase
+from api_dummy.requests_endpoints.url_base import URL_BASE
+
+url = f"{URL_BASE}employees"
+headers = {'user-agent': 'Chrome/105.0.0.0'}
 
 
-class EndpointGetEmployees:
-
-    url = f"{UrlBase.URL_BASE}employees"
-    headers = {'user-agent': 'Chrome/105.0.0.0'}
-
-    @staticmethod
-    def get_employees() -> Response:
-        return requests.get(EndpointGetEmployees.url, headers=EndpointGetEmployees.headers, timeout=1)
+def get_employees() -> Response:
+    return requests.get(url, headers=headers, timeout=1)
 
 
 """

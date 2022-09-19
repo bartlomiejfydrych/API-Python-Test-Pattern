@@ -3,49 +3,46 @@ import json
 from pygments import highlight, lexers, formatters
 
 
-class ResponseShow:
+def show_r(r):
+    # Console colors:
+    c_green = '\033[92m'
+    c_end = '\033[0m'
+    # Status code:
+    print(f"{c_green}\nStatus: {r.status_code}")
+    # Time:
+    print(f"Time: {r.elapsed.total_seconds()}")
+    # Size:
+    print(f"Size: {len(r.content)}{c_end}")
+    # Response JSON:
+    formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
+    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+    print(colorful_json)
 
-    @staticmethod
-    def show_r(r):
-        # Console colors:
-        c_green = '\033[92m'
-        c_end = '\033[0m'
-        # Status code:
-        print(f"{c_green}\nStatus: {r.status_code}")
-        # Time:
-        print(f"Time: {r.elapsed.total_seconds()}")
-        # Size:
-        print(f"Size: {len(r.content)}{c_end}")
-        # Response JSON:
-        formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
-        colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-        print(colorful_json)
 
-    @staticmethod
-    def show_optional(r):
-        # Console colors:
-        c_purple = '\033[35m'
-        c_end = '\033[0m'
-        # Request url:
-        print(f"{c_purple}Request URL: {r.url}")
-        # Headers:
-        print(f"Request headers:\n{json.dumps(dict(r.headers), indent=4)}")
-        # Cookies:
-        print(f"Request cookies: {r.cookies}{c_end}")
+def show_optional(r):
+    # Console colors:
+    c_purple = '\033[35m'
+    c_end = '\033[0m'
+    # Request url:
+    print(f"{c_purple}Request URL: {r.url}")
+    # Headers:
+    print(f"Request headers:\n{json.dumps(dict(r.headers), indent=4)}")
+    # Cookies:
+    print(f"Request cookies: {r.cookies}{c_end}")
 
-    @staticmethod
-    def show_bad_json(r):
-        # Console colors:
-        c_green = '\033[92m'
-        c_end = '\033[0m'
-        # Status code:
-        print(f"{c_green}\nStatus: {r.status_code}")
-        # Time:
-        print(f"Time: {r.elapsed.total_seconds()}")
-        # Size:
-        print(f"Size: {len(r.content)}{c_end}")
-        # Response TEXT:
-        print(r.text)
+
+def show_bad_json(r):
+    # Console colors:
+    c_green = '\033[92m'
+    c_end = '\033[0m'
+    # Status code:
+    print(f"{c_green}\nStatus: {r.status_code}")
+    # Time:
+    print(f"Time: {r.elapsed.total_seconds()}")
+    # Size:
+    print(f"Size: {len(r.content)}{c_end}")
+    # Response TEXT:
+    print(r.text)
 
 
 """

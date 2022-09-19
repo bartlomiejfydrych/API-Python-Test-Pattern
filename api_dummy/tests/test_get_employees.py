@@ -1,25 +1,25 @@
 from jsonschema.validators import validate
 
-from api_dummy.requests_endpoints.get_employees import EndpointGetEmployees
-from data_get_employees import DataGetEmployees
-from utils.response_info import ResponseInfo
-from utils.tests_info import TestsInfo
-from utils.response_show import ResponseShow
+from api_dummy.requests_endpoints.get_employees import get_employees
+from data_get_employees import schema_get_employees, response_get_employees
+from utils.response_info import log_extra_response_info
+from utils.tests_info import show_tests
+from utils.response_show import show_r, show_optional
 
 
 # Dla PyTest nazwy klas z testami zaczynamy od słowa 'Test'
 # np. class TestGetEmployees:
 
 # def test_get_employees_show():
-#     r = EndpointGetEmployees.get_employees()
-#     ResponseShow.show_r(r)
-#     ResponseShow.show_optional(r)
+#     r = get_employees()
+#     show_r(r)
+#     show_optional(r)
 
 
 def test_get_employees():
     # Puszczenie requesta i logowanie info:
-    r = EndpointGetEmployees.get_employees()
-    ResponseInfo.log_extra_response_info(r)
+    r = get_employees()
+    log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
 
@@ -30,7 +30,7 @@ def test_get_employees():
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
-    validate(rj, DataGetEmployees.schema_get_employees), test_b
+    validate(rj, schema_get_employees), test_b
 
     # ----------------------
     # Detailed tests:
@@ -54,9 +54,9 @@ def test_get_employees():
     assert employee_five["profile_image"] == "", test_4
 
     test_5 = "Complete response must be the same as saved response"
-    assert rj == DataGetEmployees.response_get_employees, test_5
+    assert rj == response_get_employees, test_5
 
     # ----------------------
     # Wyświetlenie testów:
     # ----------------------
-    TestsInfo.show_tests(test_a, test_b, test_1, test_2, test_3, test_4, test_5)
+    show_tests(test_a, test_b, test_1, test_2, test_3, test_4, test_5)
