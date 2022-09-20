@@ -7,10 +7,10 @@ from utils.response_show import show_r, show_optional, show_bad_json
 from utils.tests_info import show_tests
 
 
-def test_post_employee_show():
-    r = post_employee("Lorem ipsum dolor sit amet, consectetur porttitor.", 999999999999, 777777777777)
-    show_r(r)
-    show_optional(r)
+# def test_post_employee_show():
+#     r = post_employee("Dave", 20000, 27)
+#     show_r(r)
+#     show_optional(r)
 
 
 def test_positive_post_employee():
