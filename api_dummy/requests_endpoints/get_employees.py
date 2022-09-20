@@ -7,7 +7,7 @@ url = f"{URL_BASE}employees"
 headers = {'user-agent': 'Chrome/105.0.0.0'}
 
 
-def get_employees() -> Response:
+def get_employees_endpoint() -> Response:
     return requests.get(url, headers=headers, timeout=1)
 
 

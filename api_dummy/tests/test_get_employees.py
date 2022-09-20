@@ -1,6 +1,6 @@
 from jsonschema.validators import validate
 
-from api_dummy.requests_endpoints.get_employees import get_employees
+from api_dummy.requests_endpoints.get_employees import get_employees_endpoint
 from data_get_employees import schema_get_employees, response_get_employees
 from utils.response_info import log_extra_response_info
 from utils.tests_info import show_tests
@@ -18,7 +18,7 @@ from utils.response_show import show_r, show_optional
 
 def test_get_employees():
     # Puszczenie requesta i logowanie info:
-    r = get_employees()
+    r = get_employees_endpoint()
     log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()

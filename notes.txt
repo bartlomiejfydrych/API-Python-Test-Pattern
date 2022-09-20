@@ -63,3 +63,8 @@ Klasy, a Python:
 Jako, że to Python nie trzeba stosować klas, ponieważ zawartość jest importowana prosto z plików.
 Gdyby to była Java lub C# to stosowanie klas jest obowiązkowe.
 _______________________________________________________________________________________________________________________
+
+_______________________________________________________________________________________________________________________
+Innym sposobem budowania URL requesta jest:
+urljoin(URL_BASE, "create")
+_______________________________________________________________________________________________________________________

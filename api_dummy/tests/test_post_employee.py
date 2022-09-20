@@ -1,21 +1,21 @@
 from jsonschema.validators import validate
 
-from api_dummy.requests_endpoints.get_employee import get_employee_endpoint
-from data_get_employee import schema_get_employee, response_get_employee
+from data_post_employee import schema_post_employee
+from post_employee_utils import post_employee
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_r, show_optional, show_bad_json
 from utils.tests_info import show_tests
 
 
-def test_get_employee_show():
-    r = get_employee_endpoint(9999)
+def test_post_employee_show():
+    r = post_employee("Lorem ipsum dolor sit amet, consectetur porttitor.", 999999999999, 777777777777)
     show_r(r)
     show_optional(r)
 
 
-def test_get_employee():
+def test_positive_post_employee():
     # Puszczenie requesta i logowanie info:
-    r = get_employee_endpoint(4)
+    r = post_employee("Dave", 20000, 27)
     log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
@@ -27,7 +27,7 @@ def test_get_employee():
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
-    validate(rj, schema_get_employee), test_b
+    validate(rj, schema_post_employee), test_b
 
     # ----------------------
     # Detailed tests:
@@ -36,27 +36,27 @@ def test_get_employee():
     assert rj["status"] == "success", test_1
 
     test_2 = "Message should have correct value"
-    assert rj["message"] == "Successfully! Record has been fetched.", test_2
+    assert rj["message"] == "Successfully! Record has been added.", test_2
 
-    test_3 = "Employee with ID=4 should have correct data"
-    assert rj["data"]["id"] == 4, test_3
-    assert rj["data"]["employee_name"] == "Cedric Kelly", test_3
-    assert rj["data"]["employee_salary"] == 433060, test_3
-    assert rj["data"]["employee_age"] == 22, test_3
-    assert rj["data"]["profile_image"] == "", test_3
-
-    test_4 = "Complete response must be the same as saved response"
-    assert rj == response_get_employee, test_4
+    test_3 = "Added employee should have correct data"
+    assert rj["data"]["name"] == "Dave", test_3
+    assert rj["data"]["salary"] == "20000", test_3
+    assert rj["data"]["age"] == "27", test_3
+    assert rj["data"]["id"] > 0, test_3
 
     # ----------------------
     # Wyświetlenie testów:
     # ----------------------
-    show_tests(test_a, test_b, test_1, test_2, test_3, test_4)
+    show_tests(test_a, test_b, test_1, test_2, test_3)
 
 
-def test_get_employee_no_exist_id():
+def test_overload_data_post_employee():
     # Puszczenie requesta i logowanie info:
-    r = get_employee_endpoint(9999)
+    r = post_employee(
+        "Lorem ipsum dolor sit amet, consectetur porttitor.",
+        999999999999,
+        777777777777
+    )
     log_extra_response_info(r)
     # Przerobienie response na JSON:
     rj = r.json()
@@ -68,7 +68,7 @@ def test_get_employee_no_exist_id():
     assert r.status_code == 200, test_a
 
     test_b = "Response should have correct Schema"
-    validate(rj, schema_get_employee), test_b
+    validate(rj, schema_post_employee), test_b
 
     # ----------------------
     # Detailed tests:
@@ -77,10 +77,13 @@ def test_get_employee_no_exist_id():
     assert rj["status"] == "success", test_1
 
     test_2 = "Message should have correct value"
-    assert rj["message"] == "Successfully! Record has been fetched.", test_2
+    assert rj["message"] == "Successfully! Record has been added.", test_2
 
-    test_3 = "Data should be null"
-    assert rj["data"] is None, test_3
+    test_3 = "Added employee should have correct data"
+    assert rj["data"]["name"] == "Lorem ipsum dolor sit amet, consectetur porttitor.", test_3
+    assert rj["data"]["salary"] == "999999999999", test_3
+    assert rj["data"]["age"] == "777777777777", test_3
+    assert rj["data"]["id"] > 0, test_3
 
     # ----------------------
     # Wyświetlenie testów:
