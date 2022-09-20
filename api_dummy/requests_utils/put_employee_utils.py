@@ -1,7 +1,9 @@
+from requests import Response
+
 from api_dummy.requests_endpoints.put_employee import put_employee_endpoint
 
 
-def put_employee(employee_id, name, salary, age):
+def put_employee(employee_id, name, salary, age) -> Response:
     payload = {
         "name": name,
         "salary": str(salary),
