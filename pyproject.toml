@@ -1,0 +1,2 @@
+[tool.pytest.ini_options]
+addopts = "--html=report.html --self-contained-html"

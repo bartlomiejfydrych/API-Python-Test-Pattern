@@ -8,10 +8,10 @@ from utils.response_show import show_r, show_optional
 from utils.tests_info import show_tests
 
 
-def test_delete_employee_show():
-    r = delete_employee_endpoint(99999)
-    show_r(r)
-    show_optional(r)
+# def test_delete_employee_show():
+#     r = delete_employee_endpoint(99999)
+#     show_r(r)
+#     show_optional(r)
 
 
 def test_positive_delete_employee():

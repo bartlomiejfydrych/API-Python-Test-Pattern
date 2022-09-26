@@ -9,6 +9,7 @@ pytest = "*"
 pygments = "*"
 jsonschema = "*"
 requests-oauthlib = "*"
+pytest-html = "*"
 
 [dev-packages]
 

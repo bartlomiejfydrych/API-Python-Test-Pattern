@@ -7,10 +7,10 @@ from utils.response_show import show_r, show_optional
 from utils.tests_info import show_tests
 
 
-def test_get_employee_show():
-    r = get_employee_endpoint(9999)
-    show_r(r)
-    show_optional(r)
+# def test_get_employee_show():
+#     r = get_employee_endpoint(9999)
+#     show_r(r)
+#     show_optional(r)
 
 
 def test_get_employee():
