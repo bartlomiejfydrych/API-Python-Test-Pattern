@@ -1,0 +1,46 @@
+Strona z dokumentacją:
+https://pytest-html.readthedocs.io/en/latest/user_guide.html
+
+Instalacja:
+pipenv install pytest-html
+
+Komenda uruchomienia w konsoli:
+pytest --html=report.html --self-contained-html test_get_employee.py
+
+NOTATKI:
+> Domyślnie raport HTML generuje się w katalogu z testami.
+> pytest-html to nie jest pytest-html-reporter(!).
+> Plik 'conftest.py' może być w folderze z testami albo w głównym.
+> Plik 'pyproject.toml' musi być w głównym katalogu.
+
+> Żeby wskazać PYTEST'owi, aby zawsze z każdych testów generował raport HTML należy:
+    1. Tworzymy w głównym katalogu projektu plik o nazwie 'pyproject.toml'.
+    2. Wpisujemy w nim takie coś:
+        [tool.pytest.ini_options]
+        addopts = "--html=report.html --self-contained-html"
+    Dzięki temu zawsze, gdy wywołamy uruchomienie pytesta będzie to doklejane do jego linii poleceń.
+    IDE jak uruchamia kod też po prostu wstawia i uruchamia w konsoli komendę.
+    (Dokumentacja do tego: https://docs.pytest.org/en/6.2.x/customize.html?fbclid=IwAR2qgt4-l3wbL0gmztebQ81VxgHWlwWHtFo6DnA8t9MoASkAuLN3fNctlR4#pyproject-toml)
+    Dawid poleca pyproject.toml, ponieważ inne libki Pythona też z tego korzystają np. "black".
+
+> Jeżeli chcemy wskazać konkretny katalog do którego zawsze mają trafiać raporty HTML należy:
+    1. W katalogu głównym projektu tworzymy plik o nazwie 'conftest.py'.
+    2. W nim najpierw definiujemy ścieżkę absolutną (ROOT PATH) ze wskazaniem nazwy pliku:
+        import os
+
+        ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+        HTML_REPORT_PATH = os.path.join(ROOT_DIR, 'html_report', 'report.html')
+
+    3. Tworzymy dla Pytest 'hook', który wygląda tak (musi mieć ścieżkę nie tylko do katalogu, ale i do konkretnego pliku):
+        import pytest
+
+        @pytest.hookimpl(tryfirst=True)
+        def pytest_configure(config):
+            config.option.htmlpath = HTML_REPORT_PATH
+            (Wzór: config.option.htmlpath = '/path/to/report.html')
+
+> Dodatkowe wyjaśnienie 'addopts':
+    Generalnie Pytesta uruchamia się przez komendę "pytest".
+    Ty możesz ją wpisać w terminalu, albo jak uruchamiasz przez IDE to on sobie sam ją wpisuje.
+    Addopts dodaje wszystko co tam wpiszesz do komendy Pytest, więc:
+        jak zrobisz addopts = "--dupa=123" to on uruchamia pytest --dupa=123
