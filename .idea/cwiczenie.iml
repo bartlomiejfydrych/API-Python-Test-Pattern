@@ -8,6 +8,9 @@
       <sourceFolder url="file://$MODULE_DIR$/api_dummy/requests_utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/api_dummy/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/api_dummy/tests_data" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/api_reqres/requests_utils" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/api_reqres/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/api_reqres/tests_data" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Explanation" />
     </content>
     <orderEntry type="jdk" jdkName="Pipenv (cwiczenie)" jdkType="Python SDK" />

@@ -1,6 +1,8 @@
+Zrobione:
+http://dummy.restapiexample.com/
+
 Strony do pokrycia testami API:
 
-http://dummy.restapiexample.com/
 https://reqres.in/
 https://httpbin.org/
 https://jsonplaceholder.typicode.com/
