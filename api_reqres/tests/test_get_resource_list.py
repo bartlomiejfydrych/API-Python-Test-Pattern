@@ -7,10 +7,10 @@ from utils.response_show import show_r, show_optional
 from utils.tests_info import show_tests
 
 
-def test_get_resource_list_show():
-    r = get_resource_list()
-    show_r(r)
-    show_optional(r)
+# def test_get_resource_list_show():
+#     r = get_resource_list()
+#     show_r(r)
+#     show_optional(r)
 
 
 def test_positive_get_resource_list():
