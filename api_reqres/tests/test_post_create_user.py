@@ -1,6 +1,5 @@
 from jsonschema.validators import validate
 
-from api_reqres.requests_endpoints.get_user import get_user
 from data_post_create_user import schema_post_create_user
 from post_create_user_utils import post_create_user
 from utils.response_info import log_extra_response_info
