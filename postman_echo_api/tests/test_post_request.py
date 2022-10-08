@@ -8,7 +8,7 @@ from utils.response_show import ResponseShow
 
 def test_post_request_show():
     r = PostRequestUtils.post_graphic_file()
-    ResponseShow.show_r(r)
+    ResponseShow.show_response_as_json(r)
     ResponseShow.show_optional(r)
 
 

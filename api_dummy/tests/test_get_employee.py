@@ -3,14 +3,13 @@ from jsonschema.validators import validate
 from api_dummy.requests_endpoints.get_employee import get_employee_endpoint
 from data_get_employee import schema_get_employee, response_get_employee
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response
 from utils.tests_info import show_tests
 
 
 # def test_get_employee_show():
-#     r = get_employee_endpoint(9999)
-#     show_r(r)
-#     show_optional(r)
+#     r = get_employee_endpoint(4)
+#     show_response(r)
 
 
 def test_get_employee():

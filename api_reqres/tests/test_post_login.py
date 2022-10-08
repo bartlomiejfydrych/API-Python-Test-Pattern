@@ -4,13 +4,13 @@ from data_post_login import schema_post_login
 from post_login_utils import post_login
 from schema_error import schema_error
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 
 def test_post_login_show():
     r = post_login("eve.holt@reqres.in", "cityslicka")
-    show_r(r)
+    show_response_as_json(r)
     show_optional(r)
 
 

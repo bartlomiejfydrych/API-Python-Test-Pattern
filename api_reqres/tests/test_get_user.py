@@ -3,13 +3,13 @@ from jsonschema.validators import validate
 from api_reqres.requests_endpoints.get_user import get_user
 from data_get_user import schema_get_user
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_optional, show_r
+from utils.response_show import show_optional, show_response_as_json
 from utils.tests_info import show_tests
 
 
 def test_get_user_show():
     r = get_user(99999)
-    show_r(r)
+    show_response_as_json(r)
     show_optional(r)
 
 

@@ -3,13 +3,13 @@ from jsonschema.validators import validate
 from api_reqres.requests_endpoints.get_resource_single import get_resource_single
 from data_get_resource_single import schema_get_resource_single
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 
 def test_get_resource_single_show():
     r = get_resource_single(99999)
-    show_r(r)
+    show_response_as_json(r)
     show_optional(r)
 
 

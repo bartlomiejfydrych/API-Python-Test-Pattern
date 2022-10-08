@@ -3,7 +3,7 @@ from jsonschema.validators import validate
 from api_reqres.requests_endpoints.get_users import get_users
 from data_get_users import schema_get_users, response_get_users_page_1, response_get_users_page_2
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 

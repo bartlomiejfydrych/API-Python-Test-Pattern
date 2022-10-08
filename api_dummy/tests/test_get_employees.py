@@ -4,7 +4,7 @@ from api_dummy.requests_endpoints.get_employees import get_employees_endpoint
 from data_get_employees import schema_get_employees, response_get_employees
 from utils.response_info import log_extra_response_info
 from utils.tests_info import show_tests
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 
 
 # Dla PyTest nazwy klas z testami zaczynamy od słowa 'Test'

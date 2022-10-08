@@ -3,7 +3,7 @@ from jsonschema.validators import validate
 from api_reqres.requests_endpoints.get_resource_list import get_resource_list
 from data_get_resource_list import schema_get_resource_list, response_get_resource_list
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 

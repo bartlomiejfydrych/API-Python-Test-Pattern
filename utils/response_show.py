@@ -1,9 +1,10 @@
 import json
+from json import JSONDecodeError
 
 from pygments import highlight, lexers, formatters
 
 
-def show_r(r):
+def show_response_parameters(r):
     # Console colors:
     c_green = '\033[92m'
     c_end = '\033[0m'
@@ -13,13 +14,9 @@ def show_r(r):
     print(f"Time: {r.elapsed.total_seconds()}")
     # Size:
     print(f"Size: {len(r.content)}{c_end}")
-    # Response JSON:
-    formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
-    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-    print(colorful_json)
 
 
-def show_optional(r):
+def show_response_optional_parameters(r):
     # Console colors:
     c_purple = '\033[35m'
     c_end = '\033[0m'
@@ -31,18 +28,29 @@ def show_optional(r):
     print(f"Request cookies: {r.cookies}{c_end}")
 
 
-def show_bad_json(r):
-    # Console colors:
-    c_green = '\033[92m'
-    c_end = '\033[0m'
-    # Status code:
-    print(f"{c_green}\nStatus: {r.status_code}")
-    # Time:
-    print(f"Time: {r.elapsed.total_seconds()}")
-    # Size:
-    print(f"Size: {len(r.content)}{c_end}")
+def show_response_as_json(r):
+    # Response JSON:
+    formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
+    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+    print(colorful_json)
+
+
+def show_response_as_text(r):
     # Response TEXT:
     print(r.text)
+
+
+def show_response(r):
+    # Error colors:
+    c_yellow = '\33[93m'
+    c_end = '\033[0m'
+    show_response_parameters(r)
+    try:
+        show_response_as_json(r)
+    except JSONDecodeError:
+        print(f"{c_yellow}Invalid JSON response. Display as text.{c_end}")
+        show_response_as_text(r)
+    show_response_optional_parameters(r)
 
 
 """

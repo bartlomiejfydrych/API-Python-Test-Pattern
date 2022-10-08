@@ -4,7 +4,7 @@ from api_dummy.requests_endpoints.delete_employee import delete_employee_endpoin
 from data_delete_employee import schema_delete_employee
 from post_employee_utils import post_employee
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 

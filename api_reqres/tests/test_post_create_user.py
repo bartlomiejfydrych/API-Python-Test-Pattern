@@ -3,7 +3,7 @@ from jsonschema.validators import validate
 from data_post_create_user import schema_post_create_user
 from post_create_user_utils import post_create_user
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 

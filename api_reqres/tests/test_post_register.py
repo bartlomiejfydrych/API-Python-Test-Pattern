@@ -4,7 +4,7 @@ from data_post_register import schema_post_register
 from post_register_utils import post_register
 from schema_error import schema_error
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_r, show_optional
+from utils.response_show import show_response_as_json, show_optional
 from utils.tests_info import show_tests
 
 
