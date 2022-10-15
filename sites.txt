@@ -2,9 +2,10 @@ Zrobione:
 http://dummy.restapiexample.com/
 https://reqres.in/
 
+W trakcie:
+http://interview.dawidkaruga.pl/?fbclid=IwAR1E9lb3o6dcLiClnv7MkqQ5S62dvuBcK1IxXYQE-UQ87eW7pfyG-YowdLo#/
+
 Strony do pokrycia testami API:
-https://httpbin.org/
-https://jsonplaceholder.typicode.com/
 https://fakerestapi.azurewebsites.net/
 https://petstore.swagger.io/
 https://restful-booker.herokuapp.com/apidoc/index.html

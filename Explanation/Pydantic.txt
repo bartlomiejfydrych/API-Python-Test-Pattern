@@ -1,0 +1,36 @@
+Dokumentacja:
+https://pydantic-docs.helpmanual.io/
+
+Instalacja:
+pipenv install pydantic
+
+Przykładowy model:
+
+class GetVersionDTO(BaseModel):
+    version: str
+
+
+Walidacja:
+GetVersionDTO.validate(resp)
+
+-------------------------------------------------------------------
+Generator Modelu z pliku schema.json:
+https://pydantic-docs.helpmanual.io/datamodel_code_generator/
+
+Instalacja:
+pipenv install datamodel-code-generator
+
+Komenda:
+datamodel-codegen  --input person.json --input-file-type jsonschema --output model.py
+
+1. Tworzę w katalogu tests_data plik nazwa_schematu.json
+2. Umieszczam w nim czysty i przygotowany schemat
+3. Odpalam terminal dokładnie w tym katalogu
+4. Wykonuję polecenie:
+datamodel-codegen  --input nazwa_schematu.json --input-file-type jsonschema --output nazwa_model.py
+5. Zostaje utworzony plik w którym jest gotowa klasa z modelem
+6. Kopiuję ją
+7. Wklejam do pliku data_
+8. Zmieniam jej nazwę na odpowiednią
+9. Kasuję plik model.py
+10. Kasuję plik nazwa_schematu.json
