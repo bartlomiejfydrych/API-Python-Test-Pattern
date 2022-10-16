@@ -17,6 +17,13 @@ def get(url, params=None, **kwargs):
     return response
 
 
+def delete(url, **kwargs):
+    response = requests.delete(url, **kwargs)
+    log_extra_response_info(response)
+
+    return response
+
+
 '''
 # użycie przed
 def get_employee_endpoint(employee_id) -> Response:
