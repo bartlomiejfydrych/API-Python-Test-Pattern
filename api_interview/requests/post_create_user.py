@@ -1,3 +1,5 @@
+import json
+
 from requests import Response
 
 from api_interview.requests.url_base import URL_BASE
@@ -10,7 +12,7 @@ def post_create_user(
         username: str,
         age: int,
         admin: bool,
-        skills: list,
+        skills: list[str],
         city: str,
         street: str,
         street_number: str,
@@ -28,7 +30,8 @@ def post_create_user(
         },
         "additional": additional
     }
-    return requests_wrapper.post(url, data=payload, timeout=1)
+    r = requests_wrapper.post(url, json=payload, timeout=1)
+    return r
 
 
 '''

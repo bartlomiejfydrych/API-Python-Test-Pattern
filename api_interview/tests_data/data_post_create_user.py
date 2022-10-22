@@ -1,5 +1,6 @@
 from pydantic import BaseModel, StrictStr
 
+# SCHEMA:
 schema_post_create_user = {
     "type": "object",
     "properties": {
@@ -49,6 +50,7 @@ schema_post_create_user = {
         "additional"
     ]
 }
+# DTO:
 
 
 class Location(BaseModel):
@@ -70,3 +72,7 @@ class CreateUserDTO(BaseModel):
     skills: list[StrictStr]
     location: Location
     additional: list[AdditionalItem]
+
+
+# PAYLOADS:
+

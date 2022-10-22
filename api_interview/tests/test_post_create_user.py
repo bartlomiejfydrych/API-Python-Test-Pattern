@@ -2,14 +2,17 @@ import json
 
 from jsonschema.validators import validate
 
+from api_interview.requests.delete_user import delete_user
+from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO
+from utils.response_show import show_response
 from utils.tests_info import show_tests
 
 
-def test_post_create_user_true_admin():
+def test_create_user_admin_true():
     response = post_create_user(
-        username="Marcin",
+        username="Bogdan",
         age=30,
         admin=True,
         skills=["Chodzenie", "Skakanie", "Pływanie"],
@@ -19,34 +22,35 @@ def test_post_create_user_true_admin():
         additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
     )
     resp = response.json()
+    resp_no_id = response.json()
 
     # Pobranie ID usera
     user_id = resp["id"]
 
-    # ----------------------
-    # Basic response tests:
-    # ----------------------
-    test_a = "Response should have status code 200"
-    assert response.status_code == 200
-
+    # BASIC RESPONSE TESTS:
+    test_a = "Response should have status code 201"
+    assert response.status_code == 201
     test_b = "Response should have correct Schema"
     validate(resp, schema_post_create_user)
-
     test_c = "Response should have correct Data Transfer Object (DTO)"
     CreateUserDTO.validate(resp)
 
-    # ----------------------
-    # Detailed tests:
-    # ----------------------
+    # DETAILED TESTS:
     test_1 = "Add user should have correct data"
-    response_body = json.loads(response.request.body.decode('uft-8'))
-    del resp["id"]
-    assert resp == response_body
+    response_body = json.loads(response.request.body.decode('utf-8'))
+    del resp_no_id["id"]
+    assert resp_no_id == response_body
+    test_2 = "Added user should be visible"
+    response_get = get_user(user_id)
+    resp_get = response_get.json()
+    assert resp == resp_get
 
-    # ----------------------
-    # Wyświetlenie testów:
-    # ----------------------
-    show_tests(test_a, test_b, test_c, test_1)
+    # Cleanup:
+    response_delete = delete_user(user_id)
+    assert response_delete.status_code == 204
+
+    # WYŚWIETLANIE TESTÓW:
+    show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
 '''
