@@ -6,8 +6,26 @@ from api_interview.requests.delete_user import delete_user
 from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO
-from utils.response_show import show_response
+from utils.response_show import show_response_data
 from utils.tests_info import show_tests
+
+
+def test_create_user_show():
+    response = post_create_user(
+        username="Bogdan",
+        age=30,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    user_id = resp["id"]
+    response_delete = delete_user(user_id)
+    assert response_delete.status_code == 204
 
 
 def test_create_user_admin_true():
@@ -45,7 +63,7 @@ def test_create_user_admin_true():
     resp_get = response_get.json()
     assert resp == resp_get
 
-    # Cleanup:
+    # CLEANUP:
     response_delete = delete_user(user_id)
     assert response_delete.status_code == 204
 

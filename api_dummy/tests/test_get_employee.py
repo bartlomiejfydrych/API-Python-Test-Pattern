@@ -3,7 +3,7 @@ from jsonschema.validators import validate
 from api_dummy.requests_endpoints.get_employee import get_employee_endpoint
 from data_get_employee import schema_get_employee, response_get_employee
 from utils.response_info import log_extra_response_info
-from utils.response_show import show_response
+from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 

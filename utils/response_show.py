@@ -3,11 +3,22 @@ from json import JSONDecodeError
 
 from pygments import highlight, lexers, formatters
 
+# ------------------------------
+# CONSOLE COLORS:
+# ------------------------------
+# Response parameters:
+c_green = '\033[92m'
+# Response optional parameters:
+c_purple = '\033[35m'
+# Request body:
+c_cyan_blue = '\33[96m'
+# Error:
+c_yellow = '\33[93m'
+# End color:
+c_end = '\033[0m'
+
 
 def show_response_parameters(r):
-    # Console colors:
-    c_green = '\033[92m'
-    c_end = '\033[0m'
     # Status code:
     print(f"{c_green}\nStatus: {r.status_code}")
     # Time:
@@ -17,10 +28,7 @@ def show_response_parameters(r):
 
 
 def show_response_optional_parameters(r):
-    # Console colors:
-    c_purple = '\033[35m'
-    c_end = '\033[0m'
-    # Request url:
+    # Request URL:
     print(f"{c_purple}Request URL: {r.url}")
     # Headers:
     print(f"Request headers:\n{json.dumps(dict(r.headers), indent=4)}")
@@ -28,28 +36,35 @@ def show_response_optional_parameters(r):
     print(f"Request cookies: {r.cookies}{c_end}")
 
 
-def show_response_as_json(r):
-    # Response JSON:
-    formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
-    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-    print(colorful_json)
+def show_request_body(r):
+    if r.request.body is None:
+        return
 
+    request_body_string = r.request.body.decode('utf-8')  # Type: Bytes
 
-def show_response_as_text(r):
-    # Response TEXT:
-    print(r.text)
+    try:
+        request_body_json_loads = json.loads(request_body_string)
+        request_body_json = json.dumps(request_body_json_loads, ensure_ascii=False, indent=4)
+        print(f"{c_cyan_blue}Request body:\n{request_body_json}{c_end}")
+    except JSONDecodeError:
+        print(f"{c_yellow}Invalid JSON request body. Display as text.{c_end}")
+        print(f"{c_cyan_blue}Request body:\n{request_body_string}{c_end}")
 
 
 def show_response(r):
-    # Error colors:
-    c_yellow = '\33[93m'
-    c_end = '\033[0m'
-    show_response_parameters(r)
     try:
-        show_response_as_json(r)
+        formatted_json = json.dumps(r.json(), ensure_ascii=False, indent=4)
+        colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+        print(colorful_json)
     except JSONDecodeError:
         print(f"{c_yellow}Invalid JSON response. Display as text.{c_end}")
-        show_response_as_text(r)
+        print(r.text)
+
+
+def show_response_data(r):
+    show_response_parameters(r)
+    show_response(r)
+    show_request_body(r)
     show_response_optional_parameters(r)
 
 

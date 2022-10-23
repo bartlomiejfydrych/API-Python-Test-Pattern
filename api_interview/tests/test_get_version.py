@@ -4,12 +4,7 @@ from api_interview.requests.get_version import get_version
 from utils.tests_info import show_tests
 
 from api_interview.tests_data.data_get_version import GetVersionDTO, schema_get_version
-from utils.response_show import show_response
-
-
-# def test_get_version_show():
-#     response = get_version()
-#     show_response(response)
+from utils.response_show import show_response_data
 
 
 def test_get_version():
