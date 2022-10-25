@@ -20,7 +20,7 @@ c_end = '\033[0m'
 
 def show_response_parameters(r):
     # Status code:
-    print(f"{c_green}\nStatus: {r.status_code}")
+    print(f"{c_green}\nStatus: {r.status_code} {r.reason}")
     # Time:
     print(f"Time: {r.elapsed.total_seconds()}")
     # Size:

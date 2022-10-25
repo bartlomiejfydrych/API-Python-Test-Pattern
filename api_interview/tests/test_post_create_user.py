@@ -2,7 +2,7 @@ import json
 
 from jsonschema.validators import validate
 
-from api_interview.requests.delete_user import delete_user
+from api_interview.requests.delete_user import delete_user, teardown_delete_user
 from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO
@@ -12,7 +12,7 @@ from utils.tests_info import show_tests
 
 def test_create_user_show():
     response = post_create_user(
-        username="Bogdan",
+        username="Moko",
         age=30,
         admin=True,
         skills=["Chodzenie", "Skakanie", "Pływanie"],
@@ -23,9 +23,10 @@ def test_create_user_show():
     )
     show_response_data(response)
     resp = response.json()
-    user_id = resp["id"]
-    response_delete = delete_user(user_id)
-    assert response_delete.status_code == 204
+    try:
+        user_id = resp["id"]
+    finally:
+        teardown_delete_user(resp["id"])
 
 
 def test_create_user_admin_true():
@@ -42,36 +43,50 @@ def test_create_user_admin_true():
     resp = response.json()
     resp_no_id = response.json()
 
-    # Pobranie ID usera
-    user_id = resp["id"]
+    try:
+        # Pobranie ID usera
+        user_id = resp["id"]
 
-    # BASIC RESPONSE TESTS:
-    test_a = "Response should have status code 201"
-    assert response.status_code == 201
-    test_b = "Response should have correct Schema"
-    validate(resp, schema_post_create_user)
-    test_c = "Response should have correct Data Transfer Object (DTO)"
-    CreateUserDTO.validate(resp)
+        # ----------------------
+        # Basic response tests:
+        # ----------------------
+        test_a = "Response should have status code 201"
+        assert response.status_code == 201
 
-    # DETAILED TESTS:
-    test_1 = "Add user should have correct data"
-    response_body = json.loads(response.request.body.decode('utf-8'))
-    del resp_no_id["id"]
-    assert resp_no_id == response_body
-    test_2 = "Added user should be visible"
-    response_get = get_user(user_id)
-    resp_get = response_get.json()
-    assert resp == resp_get
+        test_b = "Response should have correct Schema"
+        validate(resp, schema_post_create_user)
 
-    # CLEANUP:
-    response_delete = delete_user(user_id)
-    assert response_delete.status_code == 204
+        test_c = "Response should have correct Data Transfer Object (DTO)"
+        CreateUserDTO.validate(resp)
 
-    # WYŚWIETLANIE TESTÓW:
-    show_tests(test_a, test_b, test_c, test_1, test_2)
+        # ----------------------
+        # Detailed tests:
+        # ----------------------
+        test_1 = "Add user should have correct data"
+        response_body = json.loads(response.request.body.decode('utf-8'))
+        del resp_no_id["id"]
+        assert resp_no_id == response_body
+
+        test_2 = "Added user should be visible"
+        response_get = get_user(user_id)
+        resp_get = response_get.json()
+        assert resp == resp_get
+
+        # Wyświetlanie testów:
+        show_tests(test_a, test_b, test_c, test_1, test_2)
+
+    finally:
+        # ----------------------
+        # TEARDOWN:
+        # ----------------------
+        teardown_delete_user(resp["id"])
 
 
 '''
+ZNALEZIONE DEFEKTY:
+1. Nie można utworzyć użytkownika z "admin": True
+2. Endpoint DELETE nie usuwa użytkownika, mimo, że sprawia wrażenie jakby to robił
+
 PLAN TESTÓW:
 Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
 Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin false.
