@@ -2,7 +2,7 @@ import json
 
 from jsonschema.validators import validate
 
-from api_interview.requests.delete_user import delete_user, teardown_delete_user
+from api_interview.requests.delete_user import teardown_delete_user
 from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO
@@ -10,23 +10,23 @@ from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 
-def test_create_user_show():
-    response = post_create_user(
-        username="Moko",
-        age=30,
-        admin=True,
-        skills=["Chodzenie", "Skakanie", "Pływanie"],
-        city="Wąchock",
-        street="Oświęcimska",
-        street_number="5a",
-        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
-    )
-    show_response_data(response)
-    resp = response.json()
-    try:
-        user_id = resp["id"]
-    finally:
-        teardown_delete_user(resp["id"])
+# def test_create_user_show():
+#     response = post_create_user(
+#         username="Moko",
+#         age=30,
+#         admin=True,
+#         skills=["Chodzenie"],
+#         city="Wąchock",
+#         street="Oświęcimska",
+#         street_number="5a",
+#         additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+#     )
+#     show_response_data(response)
+#     resp = response.json()
+#     try:
+#         user_id = resp["id"]
+#     finally:
+#         teardown_delete_user(resp["id"])
 
 
 def test_create_user_admin_true():
@@ -82,19 +82,204 @@ def test_create_user_admin_true():
         teardown_delete_user(resp["id"])
 
 
+def test_create_user_admin_false():
+    response = post_create_user(
+        username="Andrzej",
+        age=8,
+        admin=False,
+        skills=["Walka"],
+        city="Płock",
+        street="Kombatanów",
+        street_number="21g",
+        additional=[{"key": "Może i jest mały", "value": "Ale pachnie jak duży"}]
+    )
+    resp = response.json()
+    resp_no_id = response.json()
+
+    try:
+        # Pobranie ID usera
+        user_id = resp["id"]
+
+        # ----------------------
+        # Basic response tests:
+        # ----------------------
+        test_a = "Response should have status code 201"
+        assert response.status_code == 201
+
+        test_b = "Response should have correct Schema"
+        validate(resp, schema_post_create_user)
+
+        test_c = "Response should have correct Data Transfer Object (DTO)"
+        CreateUserDTO.validate(resp)
+
+        # ----------------------
+        # Detailed tests:
+        # ----------------------
+        test_1 = "Add user should have correct data"
+        response_body = json.loads(response.request.body.decode('utf-8'))
+        del resp_no_id["id"]
+        assert resp_no_id == response_body
+
+        test_2 = "Added user should be visible"
+        response_get = get_user(user_id)
+        resp_get = response_get.json()
+        assert resp == resp_get
+
+        # Wyświetlanie testów:
+        show_tests(test_a, test_b, test_c, test_1, test_2)
+
+    finally:
+        # ----------------------
+        # TEARDOWN:
+        # ----------------------
+        teardown_delete_user(resp["id"])
+
+
+def test_create_user_more_skills_and_additional_true():
+    response = post_create_user(
+        username="Konrad",
+        age=100,
+        admin=True,
+        skills=["Jedzienie", "Spanie", "Picie"],
+        city="Ruda Śląska",
+        street="Kubackiego",
+        street_number="111x",
+        additional=[
+            {
+                "key": "Papier",
+                "value": "Toaletowy"
+            },
+            {
+                "key": "Zaprawa",
+                "value": "Murarska"
+            },
+            {
+                "key": "Inka",
+                "value": "Waniliowa"
+            },
+        ]
+    )
+    resp = response.json()
+    resp_no_id = response.json()
+
+    try:
+        # Pobranie ID usera
+        user_id = resp["id"]
+
+        # ----------------------
+        # Basic response tests:
+        # ----------------------
+        test_a = "Response should have status code 201"
+        assert response.status_code == 201
+
+        test_b = "Response should have correct Schema"
+        validate(resp, schema_post_create_user)
+
+        test_c = "Response should have correct Data Transfer Object (DTO)"
+        CreateUserDTO.validate(resp)
+
+        # ----------------------
+        # Detailed tests:
+        # ----------------------
+        test_1 = "Add user should have correct data"
+        response_body = json.loads(response.request.body.decode('utf-8'))
+        del resp_no_id["id"]
+        assert resp_no_id == response_body
+
+        test_2 = "Added user should be visible"
+        response_get = get_user(user_id)
+        resp_get = response_get.json()
+        assert resp == resp_get
+
+        # Wyświetlanie testów:
+        show_tests(test_a, test_b, test_c, test_1, test_2)
+
+    finally:
+        # ----------------------
+        # TEARDOWN:
+        # ----------------------
+        teardown_delete_user(resp["id"])
+
+
+def test_create_user_more_skills_and_additional_false():
+    response = post_create_user(
+        username="Adrian",
+        age=50,
+        admin=False,
+        skills=["Leżing", "Plażing", "Smażing"],
+        city="Olsztyn",
+        street="Bimbrowskiego",
+        street_number="1c",
+        additional=[
+            {
+                "key": "Woda kolońska",
+                "value": "Leśny dzik"
+            },
+            {
+                "key": "Komputer stacjonarny",
+                "value": "Tibia 7.6"
+            },
+            {
+                "key": "Płatki śniadaniowe",
+                "value": "Kuleczki Nesquik"
+            },
+        ]
+    )
+    resp = response.json()
+    resp_no_id = response.json()
+
+    try:
+        # Pobranie ID usera
+        user_id = resp["id"]
+
+        # ----------------------
+        # Basic response tests:
+        # ----------------------
+        test_a = "Response should have status code 201"
+        assert response.status_code == 201
+
+        test_b = "Response should have correct Schema"
+        validate(resp, schema_post_create_user)
+
+        test_c = "Response should have correct Data Transfer Object (DTO)"
+        CreateUserDTO.validate(resp)
+
+        # ----------------------
+        # Detailed tests:
+        # ----------------------
+        test_1 = "Add user should have correct data"
+        response_body = json.loads(response.request.body.decode('utf-8'))
+        del resp_no_id["id"]
+        assert resp_no_id == response_body
+
+        test_2 = "Added user should be visible"
+        response_get = get_user(user_id)
+        resp_get = response_get.json()
+        assert resp == resp_get
+
+        # Wyświetlanie testów:
+        show_tests(test_a, test_b, test_c, test_1, test_2)
+
+    finally:
+        # ----------------------
+        # TEARDOWN:
+        # ----------------------
+        teardown_delete_user(resp["id"])
+
+
 '''
 ZNALEZIONE DEFEKTY:
 1. Nie można utworzyć użytkownika z "admin": True
 2. Endpoint DELETE nie usuwa użytkownika, mimo, że sprawia wrażenie jakby to robił
 
 PLAN TESTÓW:
-Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
-Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin false.
-Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin true.
-Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin false.
+[✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
+[✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin false.
+[✓]Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin true.
+[✓]Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin false.
     TESTY NEGATYWNE:
         Czy nie da się drugi raz dodać takiego samego użytkownika
-        USERNAME:
+USERNAME:
 Puste ""
 Null
 Same spacje
@@ -116,5 +301,4 @@ Brak
 Za dużo (nie ma limitu znaków więc test odpada)
 Tablica integerów
 LOCATION:
-
 '''
