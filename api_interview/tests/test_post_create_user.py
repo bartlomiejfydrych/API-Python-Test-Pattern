@@ -1,4 +1,5 @@
 import json
+from http import HTTPStatus
 
 from jsonschema.validators import validate
 
@@ -267,6 +268,60 @@ def test_create_user_more_skills_and_additional_false():
         teardown_delete_user(resp["id"])
 
 
+# --------------------------------------------------------------------------------------------------------------
+# NEGATIVE TESTS:
+# --------------------------------------------------------------------------------------------------------------
+def test_create_user_try_add_the_same_user():
+    response_one = post_create_user(
+        username="Wacław",
+        age=21,
+        admin=False,
+        skills=["Klaskanie"],
+        city="Bydgoszcz",
+        street="Grzybowa",
+        street_number="4g",
+        additional=[{"key": "Papryczka", "value": "Chili"}]
+    )
+    assert response_one.status_code == HTTPStatus.CREATED
+    resp_one = response_one.json()
+
+    try:
+        response = post_create_user(
+            username="Wacław",
+            age=21,
+            admin=False,
+            skills=["Klaskanie"],
+            city="Bydgoszcz",
+            street="Grzybowa",
+            street_number="4g",
+            additional=[{"key": "Papryczka", "value": "Chili"}]
+        )
+        resp = response.json()
+        show_response_data(response)
+
+        # ----------------------
+        # Basic response tests:
+        # ----------------------
+        test_a = "Response should have status code 201"
+        assert response.status_code == 400
+
+        # ----------------------
+        # Detailed tests:
+        # ----------------------
+        test_1 = "Response should have correct error message"
+        assert resp["status"] == 400
+        assert resp["message"] == "Provided username 'Wacław' already exists"
+
+        # Wyświetlanie testów:
+        show_tests(test_a, test_1)
+
+    finally:
+        # ----------------------
+        # TEARDOWN:
+        # ----------------------
+        teardown_delete_user(resp_one["id"])
+
+
 '''
 ZNALEZIONE DEFEKTY:
 1. Nie można utworzyć użytkownika z "admin": True
@@ -278,7 +333,7 @@ PLAN TESTÓW:
 [✓]Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin true.
 [✓]Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin false.
     TESTY NEGATYWNE:
-        Czy nie da się drugi raz dodać takiego samego użytkownika
+        [✓]Czy nie da się drugi raz dodać takiego samego użytkownika
 USERNAME:
 Puste ""
 Null
