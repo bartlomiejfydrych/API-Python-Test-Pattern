@@ -6,7 +6,8 @@ from jsonschema.validators import validate
 from api_interview.requests.delete_user import teardown_delete_user
 from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
-from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO
+from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO, \
+    response_validation_error
 from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
@@ -297,7 +298,6 @@ def test_create_user_try_add_the_same_user():
             additional=[{"key": "Papryczka", "value": "Chili"}]
         )
         resp = response.json()
-        show_response_data(response)
 
         # ----------------------
         # Basic response tests:
@@ -322,10 +322,126 @@ def test_create_user_try_add_the_same_user():
         teardown_delete_user(resp_one["id"])
 
 
+def test_create_user_username_empty():
+    response = post_create_user(
+        username="",
+        age=91,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp["status"] == 400
+    assert resp["message"] == "Provided username 'Wacław' already exists"
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_username_null():
+    response = post_create_user(
+        username=None,
+        age=91,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_username_only_spaces():
+    response = post_create_user(
+        username="      ",
+        age=91,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+
+
+
+
+
 '''
 ZNALEZIONE DEFEKTY:
 1. Nie można utworzyć użytkownika z "admin": True
 2. Endpoint DELETE nie usuwa użytkownika, mimo, że sprawia wrażenie jakby to robił
+3. Można utworzyć użytkownika z pustą "" nazwą
+4. Można utworzyć użytkownika z nazwą z samych spacji "      "
 
 PLAN TESTÓW:
 [✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
@@ -334,26 +450,26 @@ PLAN TESTÓW:
 [✓]Utworzenie użytkownika z trzema umiejętnościami i trzema obiektami "additional" oraz admin false.
     TESTY NEGATYWNE:
         [✓]Czy nie da się drugi raz dodać takiego samego użytkownika
-USERNAME:
-Puste ""
-Null
-Same spacje
-Integer
-Za długie (nie ma limitu znaków więc test odpada)
-AGE:
-String
-Brak
-Z minusem
-Po przecinku
-Za duże 9999 (nie ma limitu znaków więc test odpada)
-ADMIN:
-String
-Integer
-Brak
-SKILLS:
-Pusta tablica
-Brak
-Za dużo (nie ma limitu znaków więc test odpada)
-Tablica integerów
-LOCATION:
+            USERNAME:
+                [✓]Puste ""
+                [✓]Null
+                [✓]Same spacje
+                [>]Integer (przeszło, zazwyczaj integer jest zmieniany na string w razie czego, czy jest sens takie coś sprawdzać?)
+                [>]Za długie (nie ma limitu znaków więc test odpada)
+            AGE:
+                String
+                Brak
+                Z minusem
+                Po przecinku
+                Za duże 9999 (nie ma limitu znaków więc test odpada)
+            ADMIN:
+            String
+            Integer
+            Brak
+            SKILLS:
+            Pusta tablica
+            Brak
+            Za dużo (nie ma limitu znaków więc test odpada)
+            Tablica integerów
+            LOCATION:
 '''

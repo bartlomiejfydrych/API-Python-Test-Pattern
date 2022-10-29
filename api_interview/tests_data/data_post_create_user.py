@@ -50,6 +50,21 @@ schema_post_create_user = {
         "additional"
     ]
 }
+
+# VALIDATION ERROR RESPONSE:
+response_validation_error = {
+    "detail": [
+        {
+            "loc": [
+                "body",
+                "username"
+            ],
+            "msg": "none is not an allowed value",
+            "type": "type_error.none.not_allowed"
+        }
+    ]
+}
+
 # DTO:
 
 
