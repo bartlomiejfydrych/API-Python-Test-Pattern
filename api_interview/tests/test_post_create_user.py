@@ -7,7 +7,7 @@ from api_interview.requests.delete_user import teardown_delete_user
 from api_interview.requests.get_user import get_user
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.tests_data.data_post_create_user import schema_post_create_user, CreateUserDTO, \
-    response_validation_error
+    response_validation_error_username, response_validation_error_age, response_validation_error_age_integer
 from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
@@ -322,6 +322,9 @@ def test_create_user_try_add_the_same_user():
         teardown_delete_user(resp_one["id"])
 
 
+# ----------------------
+# USERNAME:
+# ----------------------
 def test_create_user_username_empty():
     response = post_create_user(
         username="",
@@ -389,7 +392,7 @@ def test_create_user_username_null():
     # Detailed tests:
     # ----------------------
     test_1 = "Response should have correct error message"
-    assert resp == response_validation_error
+    assert resp == response_validation_error_username
 
     # Wyświetlanie testów:
     show_tests(test_a, test_1)
@@ -425,12 +428,157 @@ def test_create_user_username_only_spaces():
     # Detailed tests:
     # ----------------------
     test_1 = "Response should have correct error message"
-    assert resp == response_validation_error
+    assert resp == response_validation_error_username
 
     # Wyświetlanie testów:
     show_tests(test_a, test_1)
 
 
+# ----------------------
+# AGE:
+# ----------------------
+def test_create_user_age_null():
+    response = post_create_user(
+        username="Kordian",
+        age=None,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_age_minus():
+    response = post_create_user(
+        username="Kordian",
+        age=-100,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_age_dot():
+    response = post_create_user(
+        username="Mokebe",
+        age=24.2,
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_age_comma():
+    response = post_create_user(
+        username="Johan",
+        age="31,9",
+        admin=False,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age_integer
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
 
 
 
@@ -442,6 +590,8 @@ ZNALEZIONE DEFEKTY:
 2. Endpoint DELETE nie usuwa użytkownika, mimo, że sprawia wrażenie jakby to robił
 3. Można utworzyć użytkownika z pustą "" nazwą
 4. Można utworzyć użytkownika z nazwą z samych spacji "      "
+5. Można dodać użytkownika z ujemną liczbą lat
+6?. Można podać wiek z kropką. Niby jest ucinana i jest okej, ale chyba nie powinno takie coś przechodzić
 
 PLAN TESTÓW:
 [✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
@@ -457,11 +607,12 @@ PLAN TESTÓW:
                 [>]Integer (przeszło, zazwyczaj integer jest zmieniany na string w razie czego, czy jest sens takie coś sprawdzać?)
                 [>]Za długie (nie ma limitu znaków więc test odpada)
             AGE:
-                String
-                Brak
-                Z minusem
-                Po przecinku
-                Za duże 9999 (nie ma limitu znaków więc test odpada)
+                [>]String (przeszło, chyba to samo co z integer->string, test chyba nie ma sensu)
+                [✓]Null/None
+                [✓]Z minusem
+                [?]Po kropce
+                [✓]Po przecinku
+                [>]Za duże 9999 (nie ma limitu znaków więc test odpada)
             ADMIN:
             String
             Integer

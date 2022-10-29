@@ -29,11 +29,11 @@ def show_response_parameters(r):
 
 def show_response_optional_parameters(r):
     # Request URL:
-    print(f"{c_purple}Request URL: {r.url}")
+    print(f"{c_purple}\nRequest URL: {r.url}")
     # Headers:
     print(f"Request headers:\n{json.dumps(dict(r.headers), indent=4)}")
     # Cookies:
-    print(f"Request cookies: {r.cookies}{c_end}")
+    print(f"Request cookies: {r.cookies}\n{c_end}")
 
 
 def show_request_body(r):

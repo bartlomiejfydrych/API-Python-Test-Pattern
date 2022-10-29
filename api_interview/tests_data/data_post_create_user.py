@@ -52,7 +52,7 @@ schema_post_create_user = {
 }
 
 # VALIDATION ERROR RESPONSE:
-response_validation_error = {
+response_validation_error_username = {
     "detail": [
         {
             "loc": [
@@ -61,6 +61,32 @@ response_validation_error = {
             ],
             "msg": "none is not an allowed value",
             "type": "type_error.none.not_allowed"
+        }
+    ]
+}
+
+response_validation_error_age = {
+    "detail": [
+        {
+            "loc": [
+                "body",
+                "age"
+            ],
+            "msg": "none is not an allowed value",
+            "type": "type_error.none.not_allowed"
+        }
+    ]
+}
+
+response_validation_error_age_integer = {
+    "detail": [
+        {
+            "loc": [
+                "body",
+                "age"
+            ],
+            "msg": "value is not a valid integer",
+            "type": "type_error.integer"
         }
     ]
 }
