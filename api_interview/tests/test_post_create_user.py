@@ -581,6 +581,86 @@ def test_create_user_age_comma():
     show_tests(test_a, test_1)
 
 
+# ----------------------
+# ADMIN:
+# ----------------------
+def test_create_user_without_admin():
+    response = post_create_user(
+        username="Brajan",
+        age=55,
+        admin=None,
+        skills=["Klikanie"],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    # TODO: Zapytać Dawida czy w takiej metodzie można jakoś zrobić, że nie podajemy jakiejś wartości
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age_integer
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+# ----------------------
+# SKILLS:
+# ----------------------
+def test_create_user_skills_empty_array():
+    response = post_create_user(
+        username="Brajan",
+        age=55,
+        admin=False,
+        skills=[],
+        city="Otwock",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age_integer
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+# def test_create_user_without_skills():
 
 
 
@@ -592,6 +672,7 @@ ZNALEZIONE DEFEKTY:
 4. Można utworzyć użytkownika z nazwą z samych spacji "      "
 5. Można dodać użytkownika z ujemną liczbą lat
 6?. Można podać wiek z kropką. Niby jest ucinana i jest okej, ale chyba nie powinno takie coś przechodzić
+7. Przechodzi pusta tablica SKILLS.
 
 PLAN TESTÓW:
 [✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
@@ -614,13 +695,30 @@ PLAN TESTÓW:
                 [✓]Po przecinku
                 [>]Za duże 9999 (nie ma limitu znaków więc test odpada)
             ADMIN:
-            String
-            Integer
-            Brak
+                [?]Brak
             SKILLS:
-            Pusta tablica
-            Brak
-            Za dużo (nie ma limitu znaków więc test odpada)
-            Tablica integerów
+                [✓]Pusta tablica
+                [>]Tablica integerów (integery są zamieniane na stringi, więc test raczej bez sensu)
+                [?]Brak
+                [>]Za dużo (nie ma limitu elementów tablicy więc test odpada)
             LOCATION:
+                CITY:
+                    Puste ""
+                    Null
+                    Same spacje
+                STREET:
+                    Puste ""
+                    Null
+                    Same spacje
+                STREET_NUMBER:
+                    Puste ""
+                    Null
+                    Same spacje
+            ADDITIONAL:
+                Pusta tablica
+                [?] Brak
+                Inny "key"
+                Inny "value"
+                Pusty "key"
+                Pusty "value"
 '''
