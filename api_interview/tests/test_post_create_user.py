@@ -660,8 +660,424 @@ def test_create_user_skills_empty_array():
     show_tests(test_a, test_1)
 
 
-# def test_create_user_without_skills():
+def test_create_user_location_city_empty():
+    response = post_create_user(
+        username="User1",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
 
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == response_validation_error_age_integer
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_city_null():
+    response = post_create_user(
+        username="User2",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city=None,
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "city"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_city_only_spaces():
+    response = post_create_user(
+        username="User3",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="      ",
+        street="Jabłkowa",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "city"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_empty():
+    response = post_create_user(
+        username="User4",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street="",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "city"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_null():
+    response = post_create_user(
+        username="User4",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street=None,
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "street"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_only_spaces():
+    response = post_create_user(
+        username="User5",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street="      ",
+        street_number="9a",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "street"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_number_empty():
+    response = post_create_user(
+        username="User6",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street="Serowa",
+        street_number="",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "street"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_number_null():
+    response = post_create_user(
+        username="User6",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street="Serowa",
+        street_number=None,
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "street_number"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_create_user_location_street_number_only_spaces():
+    response = post_create_user(
+        username="User7",
+        age=55,
+        admin=False,
+        skills=["Latanie"],
+        city="Karpacz",
+        street="Serowa",
+        street_number="   ",
+        additional=[
+            {
+                "key": "Pilot telewizora",
+                "value": "Kosz na śmieci"
+            }
+        ]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    # TODO: Poprawić testy
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "location",
+                    "street_number"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
 
 
 '''
@@ -673,6 +1089,12 @@ ZNALEZIONE DEFEKTY:
 5. Można dodać użytkownika z ujemną liczbą lat
 6?. Można podać wiek z kropką. Niby jest ucinana i jest okej, ale chyba nie powinno takie coś przechodzić
 7. Przechodzi pusta tablica SKILLS.
+8. Przechodzi pusty string "" dla Location->City
+9. Przechodzi string z samych spacji "      " dla Location->City
+10. Przechodzi pusty string "" dla Location->Street
+11. Przechodzi string z samych spacji "      " dla Location->Street
+12. Przechodzi pusty string "" dla Location->street_number
+13. Przechodzi string z samych spacji "      " dla Location->street_number
 
 PLAN TESTÓW:
 [✓]Utworzenie użytkownika z jedną umiejętnością i jednym obiektem "additional" oraz admin true.
@@ -703,17 +1125,17 @@ PLAN TESTÓW:
                 [>]Za dużo (nie ma limitu elementów tablicy więc test odpada)
             LOCATION:
                 CITY:
-                    Puste ""
-                    Null
-                    Same spacje
+                    [✓]Puste ""
+                    [✓]Null
+                    [✓]Same spacje
                 STREET:
-                    Puste ""
-                    Null
-                    Same spacje
+                    [✓]Puste ""
+                    [✓]Null
+                    [✓]Same spacje
                 STREET_NUMBER:
-                    Puste ""
-                    Null
-                    Same spacje
+                    [✓]Puste ""
+                    [✓]Null
+                    [✓]Same spacje
             ADDITIONAL:
                 Pusta tablica
                 [?] Brak
