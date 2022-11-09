@@ -10,6 +10,13 @@ def post(url, data=None, json=None, **kwargs):
     return response
 
 
+def put(url, data=None, **kwargs):
+    response = requests.put(url, data, **kwargs)
+    log_extra_response_info(response)
+
+    return response
+
+
 def get(url, params=None, **kwargs):
     response = requests.get(url, params, **kwargs)
     log_extra_response_info(response)
