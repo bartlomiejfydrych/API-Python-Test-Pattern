@@ -442,18 +442,316 @@ def test_edit_user_on_already_exist_user(create_delete_user):
 # ------------------------------------------------------
 # USERNAME:
 # ------------------------------------------------------
-# def test_edit_user_username_empty(create_delete_user):
-# def test_edit_user_username_null(create_delete_user):
-# def test_edit_user_username_only_spaces(create_delete_user):
+def test_edit_user_username_empty(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="",
+        age=30,
+        admin=False,
+        skills=["Latanie", "Śmianie", "Szczekanie"],
+        city="City1E",
+        street="Street1E",
+        street_number="1e",
+        additional=[{"key": "FrytkiE", "value": "Z keczupemE"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 200"
+    assert response.status_code == 200
+
+    test_b = "Response should have correct Schema"
+    validate(resp, schema_post_create_user)
+
+    test_c = "Response should have correct Data Transfer Object (DTO)"
+    CreateUserDTO.validate(resp)
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Edited user should have correct data"
+    response_body = json.loads(response.request.body.decode('utf-8'))
+    del resp_no_id["id"]
+    assert resp_no_id == response_body
+
+    test_2 = "Edited user should be visible"
+    response_get = get_user(create_delete_user.user["id"])
+    resp_get = response_get.json()
+    assert resp == resp_get
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_b, test_c, test_1, test_2)
+
+
+def test_edit_user_username_null(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username=None,
+        age=30,
+        admin=False,
+        skills=["Latanie", "Śmianie", "Szczekanie"],
+        city="City1E",
+        street="Street1E",
+        street_number="1e",
+        additional=[{"key": "FrytkiE", "value": "Z keczupemE"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "username"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_username_only_spaces(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="      ",
+        age=30,
+        admin=False,
+        skills=["Latanie", "Śmianie", "Szczekanie"],
+        city="City1E",
+        street="Street1E",
+        street_number="1e",
+        additional=[{"key": "FrytkiE", "value": "Z keczupemE"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 200"
+    assert response.status_code == 200
+
+    test_b = "Response should have correct Schema"
+    validate(resp, schema_post_create_user)
+
+    test_c = "Response should have correct Data Transfer Object (DTO)"
+    CreateUserDTO.validate(resp)
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Edited user should have correct data"
+    response_body = json.loads(response.request.body.decode('utf-8'))
+    del resp_no_id["id"]
+    assert resp_no_id == response_body
+
+    test_2 = "Edited user should be visible"
+    response_get = get_user(create_delete_user.user["id"])
+    resp_get = response_get.json()
+    assert resp == resp_get
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
 # ------------------------------------------------------
 # AGE:
 # ------------------------------------------------------
-# def test_edit_user_age_null(create_delete_user):
-# def test_edit_user_age_minus(create_delete_user):
-# def test_edit_user_age_dot(create_delete_user):
-# def test_edit_user_age_comma(create_delete_user):
+def test_edit_user_age_null(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=None,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "age"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_age_minus(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=-15,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 200"
+    assert response.status_code == 200
+
+    test_b = "Response should have correct Schema"
+    validate(resp, schema_post_create_user)
+
+    test_c = "Response should have correct Data Transfer Object (DTO)"
+    CreateUserDTO.validate(resp)
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Edited user should have correct data"
+    response_body = json.loads(response.request.body.decode('utf-8'))
+    del resp_no_id["id"]
+    assert resp_no_id == response_body
+
+    test_2 = "Edited user should be visible"
+    response_get = get_user(create_delete_user.user["id"])
+    resp_get = response_get.json()
+    assert resp == resp_get
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_b, test_c, test_1, test_2)
+
+
+def test_edit_user_age_dot(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=12.34,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 200"
+    assert response.status_code == 200
+
+    test_b = "Response should have correct Schema"
+    validate(resp, schema_post_create_user)
+
+    test_c = "Response should have correct Data Transfer Object (DTO)"
+    CreateUserDTO.validate(resp)
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Edited user should have correct data"
+    response_body = json.loads(response.request.body.decode('utf-8'))
+    del resp_no_id["id"]
+    assert resp_no_id == response_body
+
+    test_2 = "Edited user should be visible"
+    response_get = get_user(create_delete_user.user["id"])
+    resp_get = response_get.json()
+    assert resp == resp_get
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_b, test_c, test_1, test_2)
+
+
+def test_edit_user_age_comma(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age="43,21",
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+    resp_no_id = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "age"
+                ],
+                "msg": "value is not a valid integer",
+                "type": "type_error.integer"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
 
 
 # ------------------------------------------------------
@@ -518,6 +816,10 @@ def test_edit_user_on_already_exist_user(create_delete_user):
 DEFEKTY:
 1. Endpoint PUT nie jest w stanie edytować obiektu "additional".
 2. Można zmienić dane na dane już istniejącego użytkownika.
+3. Można zmienić 'username' na pusty string "".
+3. Można zmienić 'username' na same spacje string "      ".
+3. Można zmienić 'age' na liczbę ujemną -15.
+3. ? Gdy w 'age' wpiszemy 12.34 to to przechodzi, ale liczby po kropce są ucinane. Chyba takie coś wcale nie powinno przechodzić.
 
 PLAN TESTÓW:
 [✓]Zmiana ("admin": false -> true)
@@ -529,14 +831,14 @@ PLAN TESTÓW:
     TESTY NEGATYWNE:
         [✓]Dodać usera + zmienić dane usera na dane istniejącego już usera
             USERNAME:
-                Puste ""
-                Null/None
-                Same spacje
+                [✓]Puste ""
+                [✓]Null/None
+                [✓]Same spacje
             AGE:
-                Null/None
-                Z minusem
-                Po kropce
-                Po przecinku
+                [✓]Null/None
+                [✓]Z minusem
+                [✓]Po kropce
+                [✓]Po przecinku
             ADMIN:
                 Brak
             SKILLS:
