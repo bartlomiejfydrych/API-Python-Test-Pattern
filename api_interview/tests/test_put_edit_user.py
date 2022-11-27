@@ -1371,21 +1371,268 @@ def test_edit_user_additional_null_array(create_delete_user):
 # ------------------------------------------------------
 # ADDITIONAL - KEY:
 # ------------------------------------------------------
-# def test_edit_user_additional_key_empty(create_delete_user):
-# def test_edit_user_additional_key_null(create_delete_user):
-# def test_edit_user_additional_key_only_spaces(create_delete_user):
+def test_edit_user_additional_key_empty(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "key"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_additional_key_null(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": None, "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "key"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_additional_key_only_spaces(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "      ", "value": "Kotlety"}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "key"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
 
 
 # ------------------------------------------------------
 # ADDITIONAL - VALUE:
 # ------------------------------------------------------
-# def test_edit_user_additional_value_empty(create_delete_user):
-# def test_edit_user_additional_value_null(create_delete_user):
-# def test_edit_user_additional_value_only_spaces(create_delete_user):
+def test_edit_user_additional_value_empty(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": ""}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "value"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_additional_value_null(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": None}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "value"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
+
+
+def test_edit_user_additional_value_only_spaces(create_delete_user):
+    response = put_edit_user(
+        create_delete_user["id"],
+        username="Bogdan",
+        age=66,
+        admin=True,
+        skills=["Chodzenie", "Skakanie", "Pływanie"],
+        city="Wąchock",
+        street="Oświęcimska",
+        street_number="5a",
+        additional=[{"key": "Ulubione jedzenie", "value": "      "}]
+    )
+    show_response_data(response)
+    resp = response.json()
+
+    # ----------------------
+    # Basic response tests:
+    # ----------------------
+    test_a = "Response should have status code 422"
+    assert response.status_code == 422
+
+    # ----------------------
+    # Detailed tests:
+    # ----------------------
+    test_1 = "Response should have correct error message"
+    assert resp == {
+        "detail": [
+            {
+                "loc": [
+                    "body",
+                    "additional",
+                    "value"
+                ],
+                "msg": "none is not an allowed value",
+                "type": "type_error.none.not_allowed"
+            }
+        ]
+    }
+
+    # Wyświetlanie testów:
+    show_tests(test_a, test_1)
 
 
 '''
-TODO: DODAĆ FAKER NA USERNAME
 DEFEKTY:
 1. Endpoint PUT nie jest w stanie edytować obiektu "additional".
 2. Można zmienić dane na dane już istniejącego użytkownika.
@@ -1400,7 +1647,7 @@ DEFEKTY:
 11. Dla "location.street" przechodzi String z samych spacji "      ".
 12. Dla "location.street_number" przechodzi pusty String "".
 13. Dla "location.street_number" przechodzi String z samych spacji "      ".
-14. Dla "additional" przechodzi pusta tablica [].
+14. Przez to, że nie można zmieniać "additional" nie działają dla tego testy
 
 PLAN TESTÓW:
 [✓]Zmiana ("admin": false -> true)
@@ -1442,11 +1689,11 @@ PLAN TESTÓW:
                 [✓]Pusta tablica
                 [✓]Null/None tablica
                     KEY:
-                        Puste ""
-                        Null
-                        Same spacje
+                        [✓]Puste ""
+                        [✓]Null
+                        [✓]Same spacje
                     VALUE:
-                        Puste ""
-                        Null
-                        Same spacje
+                        [✓]Puste ""
+                        [✓]Null
+                        [✓]Same spacje
 '''
