@@ -9,10 +9,10 @@ from api_interview.requests.post_create_user import post_create_user
 @pytest.fixture
 def create_delete_user():
     response = post_create_user(
-        username="Adrian PUTa3",
+        username="Adrian PUTa4",
         age=41,
         admin=False,
-        skills=["Oddychanie"],
+        skills=["Oddychanie", "Jedzenie", "Spanie"],
         city="Kraków",
         street="Partyzantów",
         street_number="41c",
