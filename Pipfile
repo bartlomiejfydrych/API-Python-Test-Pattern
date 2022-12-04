@@ -12,6 +12,7 @@ requests-oauthlib = "*"
 pytest-html = "*"
 pydantic = "*"
 datamodel-code-generator = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
