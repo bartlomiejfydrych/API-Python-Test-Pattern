@@ -1,3 +1,4 @@
+import nt
 import os
 
 from dotenv import load_dotenv
@@ -21,9 +22,8 @@ def get_token(username: str, password: str) -> Response:
 
 def get_auth_token():
     load_dotenv(ENV_FILE_PATH)
-    user_name = os.getenv("USERNAME")
-    username = user_name.lower()
-    password = os.getenv("PASSWORD")
+    username = os.getenv("USER_USERNAME")
+    password = os.getenv("USER_PASSWORD")
     response = get_token(username, password)
     assert response.status_code == 200
     return response.json()
