@@ -68,3 +68,13 @@ ________________________________________________________________________________
 Innym sposobem budowania URL requesta jest:
 urljoin(URL_BASE, "create")
 _______________________________________________________________________________________________________________________
+
+_______________________________________________________________________________________________________________________
+os.getenv()
+_______________________________________________________________________________________________________________________
+Warto też napisać dlaczego takie rzeczy się wrzuca do zmiennych środowiskowych. To jest najprostszy sposób na dostarczenie danych bez tworzenia lub edycji pliku. Te zmienne można dodawać na wiele sposobów i z różnych miejsc. Każde CI (Jenkins, GitHub Actions, GitLab itd.) ma to sensownie ogarnięte gdzie możesz sobie bezpiecznie takie zmienne środowiskowe zapisać i one będą tylko do odczytu przez joba/build.
+Dawid
+Czyli ten pliczek .env jest wygodny w czasie pisanie w IDE, ale jak ktoś chce to może te zmienne dodać w inny sposób. Ważne tylko żeby w readme opisać jakie są zmienne i do czego są.
+Dawid
+Dawid Karuga
+ja też zawsze robię .env.example gdzie są same nazwy żeby ktoś sobie skopiował i uzupełnił

@@ -48,7 +48,7 @@ def test_edit_user_admin_true(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -159,7 +159,7 @@ def test_edit_user_more_skills(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -217,7 +217,7 @@ def test_edit_user_more_additional(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -479,7 +479,7 @@ def test_edit_user_username_empty(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -567,7 +567,7 @@ def test_edit_user_username_only_spaces(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -658,7 +658,7 @@ def test_edit_user_age_minus(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -703,7 +703,7 @@ def test_edit_user_age_dot(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user.user["id"])
+    response_get = get_user(create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
