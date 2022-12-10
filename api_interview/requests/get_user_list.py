@@ -1,3 +1,4 @@
+import requests
 from requests import Response
 
 from api_interview.requests.get_token import get_auth_token

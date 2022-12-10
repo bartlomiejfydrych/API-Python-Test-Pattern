@@ -1,6 +1,7 @@
 import nt
 import os
 
+import requests
 from dotenv import load_dotenv
 from requests import Response
 from requests.auth import HTTPBasicAuth
