@@ -11,9 +11,22 @@ from dotenv import load_dotenv
 from api_interview.resources.files_config import ENV_FILE_PATH
 
 
+@pytest.fixture(scope="session")
+def auth():
+    load_dotenv(ENV_FILE_PATH)
+    username = os.getenv("USER_USERNAME")
+    password = os.getenv("USER_PASSWORD")
+    response = get_token(username, password)
+    assert response.status_code == 200
+    response_json = response.json()
+    token = response_json["access_token"]
+    return token
+
+
 @pytest.fixture
-def create_delete_user():
+def create_delete_user(auth):
     response = post_create_user(
+        token=auth,
         username="Adrian PUTa4",
         age=41,
         admin=False,
@@ -28,15 +41,5 @@ def create_delete_user():
 
     yield user
 
-    response = delete_user(user["id"])
+    response = delete_user(auth, user["id"])
     assert response.status_code == 204
-
-
-@pytest.fixture(scope="session")
-def auth():
-    load_dotenv(ENV_FILE_PATH)
-    username = os.getenv("USERNAME")
-    password = os.getenv("PASSWORD")
-    response = get_token(username, password)
-    assert response.status_code == 200
-    return response.json()

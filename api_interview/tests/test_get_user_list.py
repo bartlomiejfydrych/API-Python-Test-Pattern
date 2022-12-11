@@ -3,23 +3,26 @@ import os
 from api_interview.requests.delete_user import delete_user
 from api_interview.requests.get_token import get_auth_token
 from api_interview.requests.get_user_list import get_user_list
+from api_interview.requests.get_version import get_version
 from api_interview.requests.post_create_user import post_create_user
 from api_interview.requests.put_edit_user import put_edit_user
 from utils.response_show import show_response_data
 
 
 def test_token():
-    response_json = get_auth_token()
-    show_response_data(response_json)
-
-
-def test_get_user_list():
-    response = get_user_list()
+    response = get_auth_token()
     show_response_data(response)
 
 
-def test_get_user_list_add_user(create_delete_user):
-    response = get_user_list()
+def test_get_user_list(auth):
+    response = get_user_list(auth)
+    response_version = get_version(auth)
+    show_response_data(response)
+    show_response_data(response_version)
+
+
+def test_get_user_list_add_user(auth, create_delete_user):
+    response = get_user_list(auth)
     show_response_data(response)
     resp = response.json()
 

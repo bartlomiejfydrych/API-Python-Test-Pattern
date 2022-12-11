@@ -27,4 +27,4 @@ def get_auth_token():
     password = os.getenv("USER_PASSWORD")
     response = get_token(username, password)
     assert response.status_code == 200
-    return response.json()
+    return response

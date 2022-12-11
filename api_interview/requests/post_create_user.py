@@ -10,6 +10,7 @@ url = f"{URL_BASE}users"
 
 
 def post_create_user(
+        token,
         username: str,
         age: int,
         admin: bool,
@@ -31,8 +32,8 @@ def post_create_user(
         },
         "additional": additional
     }
-    response_json_token = get_auth_token()
-    token = response_json_token["access_token"]
+    # response_json_token = get_auth_token()
+    # token = response_json_token["access_token"]
     auth_header = {"Authorization": f"Bearer {token}"}
     r = requests_wrapper.post(url, headers=auth_header, json=payload, timeout=1)
     return r

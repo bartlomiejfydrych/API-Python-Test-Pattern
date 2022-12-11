@@ -8,8 +8,8 @@ from utils import requests_wrapper
 url = f"{URL_BASE}users"
 
 
-def get_user_list() -> Response:
-    response_json_token = get_auth_token()
-    token = response_json_token["access_token"]
+def get_user_list(token) -> Response:
+    # response_json_token = get_auth_token()
+    # token = response_json_token["access_token"]
     auth_header = {"Authorization": f"Bearer {token}"}
     return requests_wrapper.get(url, headers=auth_header, timeout=1)
