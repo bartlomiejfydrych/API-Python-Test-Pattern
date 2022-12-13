@@ -12,8 +12,9 @@ from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 
-# def test_create_user_show():
+# def test_create_user_show(auth):
 #     response = post_create_user(
+#         auth,
 #         username="Moko",
 #         age=30,
 #         admin=True,
@@ -31,8 +32,9 @@ from utils.tests_info import show_tests
 #         teardown_delete_user(resp["id"])
 
 
-def test_create_user_admin_true():
+def test_create_user_admin_true(auth):
     response = post_create_user(
+        auth,
         username="Bogdan",
         age=30,
         admin=True,
@@ -70,7 +72,7 @@ def test_create_user_admin_true():
         assert resp_no_id == response_body
 
         test_2 = "Added user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -81,11 +83,12 @@ def test_create_user_admin_true():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(resp["id"])
+        teardown_delete_user(auth, resp["id"])
 
 
-def test_create_user_admin_false():
+def test_create_user_admin_false(auth):
     response = post_create_user(
+        auth,
         username="Andrzej",
         age=8,
         admin=False,
@@ -123,7 +126,7 @@ def test_create_user_admin_false():
         assert resp_no_id == response_body
 
         test_2 = "Added user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -134,11 +137,12 @@ def test_create_user_admin_false():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(resp["id"])
+        teardown_delete_user(auth, resp["id"])
 
 
-def test_create_user_more_skills_and_additional_true():
+def test_create_user_more_skills_and_additional_true(auth):
     response = post_create_user(
+        auth,
         username="Konrad",
         age=100,
         admin=True,
@@ -189,7 +193,7 @@ def test_create_user_more_skills_and_additional_true():
         assert resp_no_id == response_body
 
         test_2 = "Added user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -200,11 +204,12 @@ def test_create_user_more_skills_and_additional_true():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(resp["id"])
+        teardown_delete_user(auth, resp["id"])
 
 
-def test_create_user_more_skills_and_additional_false():
+def test_create_user_more_skills_and_additional_false(auth):
     response = post_create_user(
+        auth,
         username="Adrian",
         age=50,
         admin=False,
@@ -255,7 +260,7 @@ def test_create_user_more_skills_and_additional_false():
         assert resp_no_id == response_body
 
         test_2 = "Added user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -266,14 +271,15 @@ def test_create_user_more_skills_and_additional_false():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(resp["id"])
+        teardown_delete_user(auth, resp["id"])
 
 
 # --------------------------------------------------------------------------------------------------------------
 # NEGATIVE TESTS:
 # --------------------------------------------------------------------------------------------------------------
-def test_create_user_try_add_the_same_user():
+def test_create_user_try_add_the_same_user(auth):
     response_one = post_create_user(
+        auth,
         username="Wacław",
         age=21,
         admin=False,
@@ -288,6 +294,7 @@ def test_create_user_try_add_the_same_user():
 
     try:
         response = post_create_user(
+            auth,
             username="Wacław",
             age=21,
             admin=False,
@@ -319,14 +326,15 @@ def test_create_user_try_add_the_same_user():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(resp_one["id"])
+        teardown_delete_user(auth, resp_one["id"])
 
 
 # ----------------------
 # USERNAME:
 # ----------------------
-def test_create_user_username_empty():
+def test_create_user_username_empty(auth):
     response = post_create_user(
+        auth,
         username="",
         age=91,
         admin=False,
@@ -362,8 +370,9 @@ def test_create_user_username_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_username_null():
+def test_create_user_username_null(auth):
     response = post_create_user(
+        auth,
         username=None,
         age=91,
         admin=False,
@@ -398,8 +407,9 @@ def test_create_user_username_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_username_only_spaces():
+def test_create_user_username_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="      ",
         age=91,
         admin=False,
@@ -437,8 +447,9 @@ def test_create_user_username_only_spaces():
 # ----------------------
 # AGE:
 # ----------------------
-def test_create_user_age_null():
+def test_create_user_age_null(auth):
     response = post_create_user(
+        auth,
         username="Kordian",
         age=None,
         admin=False,
@@ -473,8 +484,9 @@ def test_create_user_age_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_age_minus():
+def test_create_user_age_minus(auth):
     response = post_create_user(
+        auth,
         username="Kordian",
         age=-100,
         admin=False,
@@ -509,8 +521,9 @@ def test_create_user_age_minus():
     show_tests(test_a, test_1)
 
 
-def test_create_user_age_dot():
+def test_create_user_age_dot(auth):
     response = post_create_user(
+        auth,
         username="Mokebe",
         age=24.2,
         admin=False,
@@ -545,8 +558,9 @@ def test_create_user_age_dot():
     show_tests(test_a, test_1)
 
 
-def test_create_user_age_comma():
+def test_create_user_age_comma(auth):
     response = post_create_user(
+        auth,
         username="Johan",
         age="31,9",
         admin=False,
@@ -584,8 +598,9 @@ def test_create_user_age_comma():
 # ----------------------
 # ADMIN:
 # ----------------------
-def test_create_user_without_admin():
+def test_create_user_without_admin(auth):
     response = post_create_user(
+        auth,
         username="Brajan",
         age=55,
         admin=None,
@@ -624,8 +639,9 @@ def test_create_user_without_admin():
 # ----------------------
 # SKILLS:
 # ----------------------
-def test_create_user_skills_empty_array():
+def test_create_user_skills_empty_array(auth):
     response = post_create_user(
+        auth,
         username="Brajan",
         age=55,
         admin=False,
@@ -660,8 +676,9 @@ def test_create_user_skills_empty_array():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_city_empty():
+def test_create_user_location_city_empty(auth):
     response = post_create_user(
+        auth,
         username="User1",
         age=55,
         admin=False,
@@ -696,8 +713,9 @@ def test_create_user_location_city_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_city_null():
+def test_create_user_location_city_null(auth):
     response = post_create_user(
+        auth,
         username="User2",
         age=55,
         admin=False,
@@ -744,8 +762,9 @@ def test_create_user_location_city_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_city_only_spaces():
+def test_create_user_location_city_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="User3",
         age=55,
         admin=False,
@@ -792,8 +811,9 @@ def test_create_user_location_city_only_spaces():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_empty():
+def test_create_user_location_street_empty(auth):
     response = post_create_user(
+        auth,
         username="User4",
         age=55,
         admin=False,
@@ -840,8 +860,9 @@ def test_create_user_location_street_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_null():
+def test_create_user_location_street_null(auth):
     response = post_create_user(
+        auth,
         username="User4",
         age=55,
         admin=False,
@@ -888,8 +909,9 @@ def test_create_user_location_street_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_only_spaces():
+def test_create_user_location_street_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="User5",
         age=55,
         admin=False,
@@ -936,8 +958,9 @@ def test_create_user_location_street_only_spaces():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_number_empty():
+def test_create_user_location_street_number_empty(auth):
     response = post_create_user(
+        auth,
         username="User6",
         age=55,
         admin=False,
@@ -984,8 +1007,9 @@ def test_create_user_location_street_number_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_number_null():
+def test_create_user_location_street_number_null(auth):
     response = post_create_user(
+        auth,
         username="User6",
         age=55,
         admin=False,
@@ -1032,8 +1056,9 @@ def test_create_user_location_street_number_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_location_street_number_only_spaces():
+def test_create_user_location_street_number_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="User7",
         age=55,
         admin=False,
@@ -1080,8 +1105,9 @@ def test_create_user_location_street_number_only_spaces():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_empty_array():
+def test_create_user_additional_empty_array(auth):
     response = post_create_user(
+        auth,
         username="User8",
         age=55,
         admin=False,
@@ -1123,8 +1149,9 @@ def test_create_user_additional_empty_array():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_key_empty():
+def test_create_user_additional_key_empty(auth):
     response = post_create_user(
+        auth,
         username="User9",
         age=55,
         admin=False,
@@ -1171,8 +1198,9 @@ def test_create_user_additional_key_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_key_null():
+def test_create_user_additional_key_null(auth):
     response = post_create_user(
+        auth,
         username="User10",
         age=55,
         admin=False,
@@ -1220,8 +1248,9 @@ def test_create_user_additional_key_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_key_only_spaces():
+def test_create_user_additional_key_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="User10",
         age=55,
         admin=False,
@@ -1269,8 +1298,9 @@ def test_create_user_additional_key_only_spaces():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_value_empty():
+def test_create_user_additional_value_empty(auth):
     response = post_create_user(
+        auth,
         username="User11",
         age=55,
         admin=False,
@@ -1318,8 +1348,9 @@ def test_create_user_additional_value_empty():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_value_null():
+def test_create_user_additional_value_null(auth):
     response = post_create_user(
+        auth,
         username="User12",
         age=55,
         admin=False,
@@ -1367,8 +1398,9 @@ def test_create_user_additional_value_null():
     show_tests(test_a, test_1)
 
 
-def test_create_user_additional_value_only_spaces():
+def test_create_user_additional_value_only_spaces(auth):
     response = post_create_user(
+        auth,
         username="User13",
         age=55,
         admin=False,

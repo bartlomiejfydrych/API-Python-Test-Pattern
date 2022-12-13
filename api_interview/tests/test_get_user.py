@@ -3,8 +3,8 @@ from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 
-def test_get_user_no_exist_id():
-    response = get_user(99999)
+def test_get_user_no_exist_id(auth):
+    response = get_user(auth, 99999)
     resp = response.json()
 
     # ----------------------

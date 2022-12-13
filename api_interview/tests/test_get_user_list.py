@@ -40,8 +40,9 @@ def test_get_user_list_add_user(auth, create_delete_user):
     assert create_delete_user == added_user
 
 
-def test_get_user_list_edit_user(create_delete_user):
+def test_get_user_list_edit_user(auth, create_delete_user):
     response_put = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Radim",
         age=66,
@@ -54,7 +55,7 @@ def test_get_user_list_edit_user(create_delete_user):
     )
     resp_put = response_put.json()
 
-    response = get_user_list()
+    response = get_user_list(auth)
     show_response_data(response)
     resp = response.json()
 
@@ -72,9 +73,10 @@ def test_get_user_list_edit_user(create_delete_user):
     assert resp_put == edit_user
 
 
-def test_get_user_list_delete_user():
+def test_get_user_list_delete_user(auth):
     # Add user
     response_post = post_create_user(
+        auth,
         username="Edward",
         age=44,
         admin=True,
@@ -89,11 +91,11 @@ def test_get_user_list_delete_user():
     assert response_post.status_code == 201
 
     # Delete user
-    response_delete = delete_user(user_id)
+    response_delete = delete_user(auth, user_id)
     assert response_delete.status_code == 204
 
     # Get user
-    response = get_user_list()
+    response = get_user_list(auth)
     show_response_data(response)
     resp = response.json()
 

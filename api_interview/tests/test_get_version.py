@@ -7,8 +7,8 @@ from api_interview.tests_data.data_get_version import GetVersionDTO, schema_get_
 from utils.response_show import show_response_data
 
 
-def test_get_version():
-    response = get_version()
+def test_get_version(auth):
+    response = get_version(auth)
     resp = response.json()
 
     # ----------------------

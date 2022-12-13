@@ -6,6 +6,7 @@ from utils import requests_wrapper
 
 
 def put_edit_user(
+        token,
         user_id,
         username: str,
         age: int,
@@ -29,8 +30,8 @@ def put_edit_user(
         },
         "additional": additional
     }
-    response_json_token = get_auth_token()
-    token = response_json_token["access_token"]
+    # response_json_token = get_auth_token()
+    # token = response_json_token["access_token"]
     auth_header = {"Authorization": f"Bearer {token}"}
     response = requests_wrapper.put(url, headers=auth_header, json=payload, timeout=1)
     return response

@@ -15,10 +15,10 @@ def delete_user(token, user_id) -> Response:
     return requests_wrapper.delete(url, headers=auth_header, timeout=1)
 
 
-def teardown_delete_user(user_id):
+def teardown_delete_user(token, user_id):
     url = f"{URL_BASE}users/{user_id}"
-    response_json_token = get_auth_token()
-    token = response_json_token["access_token"]
+    # response_json_token = get_auth_token()
+    # token = response_json_token["access_token"]
     auth_header = {"Authorization": f"Bearer {token}"}
     response = requests_wrapper.delete(url, headers=auth_header, timeout=1)
     assert response.status_code == HTTPStatus.NO_CONTENT

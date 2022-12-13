@@ -11,8 +11,9 @@ from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 
-def test_edit_user_admin_true(create_delete_user):
+def test_edit_user_admin_true(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=30,
@@ -48,7 +49,7 @@ def test_edit_user_admin_true(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -56,8 +57,9 @@ def test_edit_user_admin_true(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_admin_false():
+def test_edit_user_admin_false(auth):
     response_post = post_create_user(
+        auth,
         username="Adam1",
         age=29,
         admin=True,
@@ -73,6 +75,7 @@ def test_edit_user_admin_false():
 
     try:
         response = put_edit_user(
+            auth,
             user_id,
             username="AdamE",
             age=30,
@@ -108,7 +111,7 @@ def test_edit_user_admin_false():
         assert resp_no_id == response_body
 
         test_2 = "Edited user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -119,11 +122,12 @@ def test_edit_user_admin_false():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(user_id)
+        teardown_delete_user(auth, user_id)
 
 
-def test_edit_user_more_skills(create_delete_user):
+def test_edit_user_more_skills(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="AdamE",
         age=30,
@@ -159,7 +163,7 @@ def test_edit_user_more_skills(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -167,8 +171,9 @@ def test_edit_user_more_skills(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_more_additional(create_delete_user):
+def test_edit_user_more_additional(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="AdamE",
         age=30,
@@ -217,7 +222,7 @@ def test_edit_user_more_additional(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -225,8 +230,9 @@ def test_edit_user_more_additional(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_one_skills():
+def test_edit_user_one_skills(auth):
     response_post = post_create_user(
+        auth,
         username="Adam1",
         age=29,
         admin=True,
@@ -242,6 +248,7 @@ def test_edit_user_one_skills():
 
     try:
         response = put_edit_user(
+            auth,
             user_id,
             username="AdamE",
             age=30,
@@ -277,7 +284,7 @@ def test_edit_user_one_skills():
         assert resp_no_id == response_body
 
         test_2 = "Edited user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -288,11 +295,12 @@ def test_edit_user_one_skills():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(user_id)
+        teardown_delete_user(auth, user_id)
 
 
-def test_edit_user_one_additional():
+def test_edit_user_one_additional(auth):
     response_post = post_create_user(
+        auth,
         username="Adam1",
         age=29,
         admin=True,
@@ -321,6 +329,7 @@ def test_edit_user_one_additional():
 
     try:
         response = put_edit_user(
+            auth,
             user_id,
             username="AdamE",
             age=30,
@@ -356,7 +365,7 @@ def test_edit_user_one_additional():
         assert resp_no_id == response_body
 
         test_2 = "Edited user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -367,14 +376,15 @@ def test_edit_user_one_additional():
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(user_id)
+        teardown_delete_user(auth, user_id)
 
 
 # --------------------------------------------------------------------------------------------------------------
 # NEGATIVE TESTS:
 # --------------------------------------------------------------------------------------------------------------
-def test_edit_user_on_already_exist_user(create_delete_user):
+def test_edit_user_on_already_exist_user(auth, create_delete_user):
     response_post = post_create_user(
+        auth,
         username="Adam1",
         age=29,
         admin=True,
@@ -390,6 +400,7 @@ def test_edit_user_on_already_exist_user(create_delete_user):
 
     try:
         response = put_edit_user(
+            auth,
             user_id,
             username="Adrian PUTa3",
             age=41,
@@ -425,7 +436,7 @@ def test_edit_user_on_already_exist_user(create_delete_user):
         assert resp_no_id == response_body
 
         test_2 = "Edited user should be visible"
-        response_get = get_user(user_id)
+        response_get = get_user(auth, user_id)
         resp_get = response_get.json()
         assert resp == resp_get
 
@@ -436,14 +447,15 @@ def test_edit_user_on_already_exist_user(create_delete_user):
         # ----------------------
         # TEARDOWN:
         # ----------------------
-        teardown_delete_user(user_id)
+        teardown_delete_user(auth, user_id)
 
 
 # ------------------------------------------------------
 # USERNAME:
 # ------------------------------------------------------
-def test_edit_user_username_empty(create_delete_user):
+def test_edit_user_username_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="",
         age=30,
@@ -479,7 +491,7 @@ def test_edit_user_username_empty(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -487,8 +499,9 @@ def test_edit_user_username_empty(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_username_null(create_delete_user):
+def test_edit_user_username_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username=None,
         age=30,
@@ -530,8 +543,9 @@ def test_edit_user_username_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_username_only_spaces(create_delete_user):
+def test_edit_user_username_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="      ",
         age=30,
@@ -567,7 +581,7 @@ def test_edit_user_username_only_spaces(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -578,8 +592,9 @@ def test_edit_user_username_only_spaces(create_delete_user):
 # ------------------------------------------------------
 # AGE:
 # ------------------------------------------------------
-def test_edit_user_age_null(create_delete_user):
+def test_edit_user_age_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=None,
@@ -621,8 +636,9 @@ def test_edit_user_age_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_age_minus(create_delete_user):
+def test_edit_user_age_minus(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=-15,
@@ -658,7 +674,7 @@ def test_edit_user_age_minus(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -666,8 +682,9 @@ def test_edit_user_age_minus(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_age_dot(create_delete_user):
+def test_edit_user_age_dot(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=12.34,
@@ -703,7 +720,7 @@ def test_edit_user_age_dot(create_delete_user):
     assert resp_no_id == response_body
 
     test_2 = "Edited user should be visible"
-    response_get = get_user(create_delete_user["id"])
+    response_get = get_user(auth, create_delete_user["id"])
     resp_get = response_get.json()
     assert resp == resp_get
 
@@ -711,8 +728,9 @@ def test_edit_user_age_dot(create_delete_user):
     show_tests(test_a, test_b, test_c, test_1, test_2)
 
 
-def test_edit_user_age_comma(create_delete_user):
+def test_edit_user_age_comma(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age="43,21",
@@ -756,8 +774,9 @@ def test_edit_user_age_comma(create_delete_user):
 # ------------------------------------------------------
 # ADMIN:
 # ------------------------------------------------------
-def test_edit_user_admin_null(create_delete_user):
+def test_edit_user_admin_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=45,
@@ -801,8 +820,9 @@ def test_edit_user_admin_null(create_delete_user):
 # ------------------------------------------------------
 # SKILLS:
 # ------------------------------------------------------
-def test_edit_user_skills_empty_array(create_delete_user):
+def test_edit_user_skills_empty_array(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=45,
@@ -843,8 +863,9 @@ def test_edit_user_skills_empty_array(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_skills_null_in_array(create_delete_user):
+def test_edit_user_skills_null_in_array(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=45,
@@ -888,8 +909,9 @@ def test_edit_user_skills_null_in_array(create_delete_user):
 # ------------------------------------------------------
 # LOCATION - CITY:
 # ------------------------------------------------------
-def test_edit_user_location_city_empty(create_delete_user):
+def test_edit_user_location_city_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -931,8 +953,9 @@ def test_edit_user_location_city_empty(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_city_null(create_delete_user):
+def test_edit_user_location_city_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -974,8 +997,9 @@ def test_edit_user_location_city_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_city_only_spaces(create_delete_user):
+def test_edit_user_location_city_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1020,8 +1044,9 @@ def test_edit_user_location_city_only_spaces(create_delete_user):
 # ------------------------------------------------------
 # LOCATION - STREET:
 # ------------------------------------------------------
-def test_edit_user_location_street_empty(create_delete_user):
+def test_edit_user_location_street_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1063,8 +1088,9 @@ def test_edit_user_location_street_empty(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_street_null(create_delete_user):
+def test_edit_user_location_street_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1106,8 +1132,9 @@ def test_edit_user_location_street_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_street_only_spaces(create_delete_user):
+def test_edit_user_location_street_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1152,8 +1179,9 @@ def test_edit_user_location_street_only_spaces(create_delete_user):
 # ------------------------------------------------------
 # LOCATION - STREET_NUMBER:
 # ------------------------------------------------------
-def test_edit_user_location_street_number_empty(create_delete_user):
+def test_edit_user_location_street_number_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1195,8 +1223,9 @@ def test_edit_user_location_street_number_empty(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_street_number_null(create_delete_user):
+def test_edit_user_location_street_number_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1238,8 +1267,9 @@ def test_edit_user_location_street_number_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_location_street_number_only_spaces(create_delete_user):
+def test_edit_user_location_street_number_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1284,8 +1314,9 @@ def test_edit_user_location_street_number_only_spaces(create_delete_user):
 # ------------------------------------------------------
 # ADDITIONAL:
 # ------------------------------------------------------
-def test_edit_user_additional_empty_array(create_delete_user):
+def test_edit_user_additional_empty_array(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1326,8 +1357,9 @@ def test_edit_user_additional_empty_array(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_additional_null_array(create_delete_user):
+def test_edit_user_additional_null_array(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1371,8 +1403,9 @@ def test_edit_user_additional_null_array(create_delete_user):
 # ------------------------------------------------------
 # ADDITIONAL - KEY:
 # ------------------------------------------------------
-def test_edit_user_additional_key_empty(create_delete_user):
+def test_edit_user_additional_key_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1414,8 +1447,9 @@ def test_edit_user_additional_key_empty(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_additional_key_null(create_delete_user):
+def test_edit_user_additional_key_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1457,8 +1491,9 @@ def test_edit_user_additional_key_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_additional_key_only_spaces(create_delete_user):
+def test_edit_user_additional_key_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1503,8 +1538,9 @@ def test_edit_user_additional_key_only_spaces(create_delete_user):
 # ------------------------------------------------------
 # ADDITIONAL - VALUE:
 # ------------------------------------------------------
-def test_edit_user_additional_value_empty(create_delete_user):
+def test_edit_user_additional_value_empty(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1546,8 +1582,9 @@ def test_edit_user_additional_value_empty(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_additional_value_null(create_delete_user):
+def test_edit_user_additional_value_null(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,
@@ -1589,8 +1626,9 @@ def test_edit_user_additional_value_null(create_delete_user):
     show_tests(test_a, test_1)
 
 
-def test_edit_user_additional_value_only_spaces(create_delete_user):
+def test_edit_user_additional_value_only_spaces(auth, create_delete_user):
     response = put_edit_user(
+        auth,
         create_delete_user["id"],
         username="Bogdan",
         age=66,

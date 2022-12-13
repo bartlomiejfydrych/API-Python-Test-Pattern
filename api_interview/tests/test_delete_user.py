@@ -5,9 +5,10 @@ from utils.response_show import show_response_data
 from utils.tests_info import show_tests
 
 
-def test_delete_user():
+def test_delete_user(auth):
     # Add
     response_post = post_create_user(
+        token=auth,
         username="Endriu",
         age=30,
         admin=True,
@@ -21,7 +22,7 @@ def test_delete_user():
     user_id = resp_post["id"]
 
     # Delete
-    response = delete_user(user_id)
+    response = delete_user(auth, user_id)
     show_response_data(response)
     resp_txt = response.text
 
@@ -32,7 +33,7 @@ def test_delete_user():
     assert resp_txt == ""
 
     # Get
-    response_get = get_user(user_id)
+    response_get = get_user(auth, user_id)
     resp_get = response_get.json()
 
     test_b = "Response should have status code 404"
@@ -52,9 +53,9 @@ def test_delete_user():
 # ----------------------------------------------------------------------------------------------------------
 # TESTY NEGATYWNE:
 # ----------------------------------------------------------------------------------------------------------
-def test_delete_user_no_exist():
+def test_delete_user_no_exist(auth):
     user_id = 99999
-    response = delete_user(user_id)
+    response = delete_user(auth, user_id)
     show_response_data(response)
     resp = response.json()
 
