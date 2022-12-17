@@ -1,5 +1,14 @@
 import json
+import os
+from base64 import b64decode
 from typing import Optional
+
+import jwt
+from dotenv import load_dotenv
+from jwt import ExpiredSignatureError
+
+from api_interview.requests.get_token import get_token
+from api_interview.resources.files_config import ENV_FILE_PATH, TOKEN_FILE_PATH
 
 
 def test_payload_cut():
@@ -253,7 +262,70 @@ def test_payload_cut():
 
     # Na pozostałe próby:
     print("\nPozostałe próby-------------------------------------------------------")
-    payload_cut(21)
+
+
+def test_token():
+    def auth():
+        # Zaciągam ścieżkę do pliku
+        token_file_path = TOKEN_FILE_PATH
+        # Jeżeli plik nie istnieje to puszczam request i tworzę plik z tokenem
+        if not os.path.isfile(token_file_path):
+            load_dotenv(ENV_FILE_PATH)
+            username = os.getenv("USER_USERNAME")
+            password = os.getenv("USER_PASSWORD")
+            response = get_token(username, password)
+            assert response.status_code == 200
+            response_json = response.json()
+            token = response_json["access_token"]
+            file = open(token_file_path, "r+")
+            file.write(token)
+            file.close()
+            return token
+        # Jeżeli powyższy warunek nie jest spełniony to
+        else:
+            # Otwieram plik z tokenem
+            file = open(token_file_path, "r+")
+            # Przypisuję zawartość pliku do zmiennej
+            token = file.read()
+            # Próbuję zdecodować token oraz sprawdzić jego ważność
+            try:
+                jwt.decode(token, algorithms=['HS256'], options={"verify_signature": False, "verify_exp": True})
+                return token
+            # Jeżeli token stracił ważność to łapię błąd i puszczam request ponownie
+            except ExpiredSignatureError:
+                load_dotenv(ENV_FILE_PATH)
+                username = os.getenv("USER_USERNAME")
+                password = os.getenv("USER_PASSWORD")
+                response = get_token(username, password)
+                assert response.status_code == 200
+                response_json = response.json()
+                token = response_json["access_token"]
+                file = open(token_file_path, "r+")
+                file.write(token)
+                file.close()
+                return token
+
+            # # Dekoduję token i zapisuję jego parametry do zmiennej
+            # token_decode = jwt.decode(token, algorithms=['HS256'], options={"verify_signature": False, "verify_exp": True})
+            # # Zapisuję sobie jego czas wygaśnięcia do zmiennej
+            # token_expirie_time = token_decode['exp']
+            # print(token_decode['exp'])
+
+
+        # file = open(TOKEN_FILE_PATH, "r+")
+        # load_dotenv(ENV_FILE_PATH)
+        # username = os.getenv("USER_USERNAME")
+        # password = os.getenv("USER_PASSWORD")
+        # response = get_token(username, password)
+        # assert response.status_code == 200
+        # response_json = response.json()
+        # token = response_json["access_token"]
+        # file.truncate()
+        # file.write(token)
+        # file.close()
+        # return token
+
+    print(auth())
 
 
 """

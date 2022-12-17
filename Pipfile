@@ -13,6 +13,7 @@ pytest-html = "*"
 pydantic = "*"
 datamodel-code-generator = "*"
 python-dotenv = "*"
+pyjwt = "*"
 
 [dev-packages]
 
