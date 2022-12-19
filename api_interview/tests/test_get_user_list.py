@@ -1,7 +1,7 @@
 import os
 
 from api_interview.requests.delete_user import delete_user
-from api_interview.requests.get_token import get_auth_token
+from api_interview.requests.get_token import env_authorization
 from api_interview.requests.get_user_list import get_user_list
 from api_interview.requests.get_version import get_version
 from api_interview.requests.post_create_user import post_create_user
@@ -10,7 +10,7 @@ from utils.response_show import show_response_data
 
 
 def test_token():
-    response = get_auth_token()
+    response = env_authorization()
     show_response_data(response)
 
 

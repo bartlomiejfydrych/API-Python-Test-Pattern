@@ -7,7 +7,7 @@ import jwt
 from dotenv import load_dotenv
 from jwt import ExpiredSignatureError
 
-from api_interview.requests.get_token import get_token
+from api_interview.requests.get_token import request_get_token
 from api_interview.resources.files_config import ENV_FILE_PATH, TOKEN_FILE_PATH
 
 
@@ -273,7 +273,7 @@ def test_token():
             load_dotenv(ENV_FILE_PATH)
             username = os.getenv("USER_USERNAME")
             password = os.getenv("USER_PASSWORD")
-            response = get_token(username, password)
+            response = request_get_token(username, password)
             assert response.status_code == 200
             response_json = response.json()
             token = response_json["access_token"]
@@ -296,7 +296,7 @@ def test_token():
                 load_dotenv(ENV_FILE_PATH)
                 username = os.getenv("USER_USERNAME")
                 password = os.getenv("USER_PASSWORD")
-                response = get_token(username, password)
+                response = request_get_token(username, password)
                 assert response.status_code == 200
                 response_json = response.json()
                 token = response_json["access_token"]
@@ -326,6 +326,18 @@ def test_token():
         # return token
 
     print(auth())
+
+
+# Stare auth():
+# def auth():
+#     load_dotenv(ENV_FILE_PATH)
+#     username = os.getenv("USER_USERNAME")
+#     password = os.getenv("USER_PASSWORD")
+#     response = request_get_token(username, password)
+#     assert response.status_code == 200
+#     response_json = response.json()
+#     token = response_json["access_token"]
+#     return token
 
 
 """

@@ -1,7 +1,7 @@
 import requests
 from requests import Response
 
-from api_interview.requests.get_token import get_auth_token
+from api_interview.requests.get_token import env_authorization
 from api_interview.requests.url_base import URL_BASE
 from utils import requests_wrapper
 
