@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from jwt import ExpiredSignatureError
 
 from api_interview.requests.get_token import request_get_token
+from api_interview.requests_utils.payload_cutter import payload_cutter
 from api_interview.resources.files_config import ENV_FILE_PATH, TOKEN_FILE_PATH
 
 
@@ -38,9 +39,10 @@ def test_payload_cut():
         }
 
         if remove_none:
-            for payload_key in list(payload):
-                if payload[payload_key] is None:
-                    del payload[payload_key]
+            payload_cutter(payload)
+            # for payload_key in list(payload):
+            #     if payload[payload_key] is None:
+            #         del payload[payload_key]
 
         payload_json = json.dumps(payload, ensure_ascii=False, indent=4)
         print(f"\n{payload_json}")
